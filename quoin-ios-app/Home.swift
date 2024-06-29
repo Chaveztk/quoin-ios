@@ -7,6 +7,8 @@ struct HomeView: View {
     var isLandlord: Bool = false
     var isDirector: Bool = false
     var username: String = ""
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     @State private var isBellModalVisible = false // State for bell modal
     
     @State private var searchText = ""
@@ -17,10 +19,10 @@ struct HomeView: View {
     @State private var selectedTab = 0 // State for selected tab
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 12))!: [
-            Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 12))!),
-            Event(title: "Lunch with colleagues", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 12))!),
-            Event(title: "Dinner with friends", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 12))!)
+        Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!: [
+            Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!),
+            Event(title: "Dentis appointment", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!),
+            Event(title: "Annual appointment", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!)
         ]
     ]
     
@@ -101,23 +103,23 @@ struct HomeView: View {
                         .padding(.horizontal)
                         
                         
-                        NavigationLink(destination: AnnouncementsView()) {
-                            
-                            VStack(alignment: .leading) {
-                                // Announcement Start
-                                VStack {
-                                    AnnouncementCardView(
-                                        title: "Announcement:",
-                                        heading: "Community Welcomes New Shop",
-                                        date: "Mon, 1st June, 19:00",
-                                        imageName: "ShopOpening", // Ensure this image exists in your assets
-                                        announcement: "Excitement buzzed through the community as the doors of a new shop swung open for the first time. Its vibrant signage beckoned passersby with promises of unique wares and friendly service. Local residents streamed in, eager to explore the shelves stocked with handcrafted goods and locally sourced treasures. The shop's grand opening marked a new chapter in the neighborhood, fostering a sense of community pride and support for small businesses. "
-                                    )
-                                }
-                                .lineLimit(3)
-                            }
-                        }
-                        .padding(.top, 10)
+//                        NavigationLink(destination: AnnouncementsView()) {
+//                            
+//                            VStack(alignment: .leading) {
+//                                // Announcement Start
+//                                VStack {
+//                                    AnnouncementCardView(
+//                                        title: "Announcement:",
+//                                        heading: "Community Welcomes New Shop",
+//                                        date: "Mon, 1st June, 19:00",
+//                                        imageName: "ShopOpening", // Ensure this image exists in your assets
+//                                        announcement: "Excitement buzzed through the community as the doors of a new shop swung open for the first time. Its vibrant signage beckoned passersby with promises of unique wares and friendly service. Local residents streamed in, eager to explore the shelves stocked with handcrafted goods and locally sourced treasures. The shop's grand opening marked a new chapter in the neighborhood, fostering a sense of community pride and support for small businesses. "
+//                                    )
+//                                }
+//                                .lineLimit(3)
+//                            }
+//                        }
+//                        .padding(.top, 10)
                         
                         
                         
@@ -130,18 +132,36 @@ struct HomeView: View {
                             // Buttin in a row start
                             
                             VStack {
+                                
+                                
 //                                HStack(spacing: 20) {
-//                                    WidgetCard(bookings: $bookings)
+////                                    WidgetCard(bookings: $bookings)
+//                                    WidgetCard()
 //                                        .frame(width: 170, height: 150)
 //                                        .background(Color(UIColor.white))
 //                                        .cornerRadius(25)
 //                                        .shadow(radius: 5)
-//                                    WidgetCard(bookings: $bookings)
+////                                    WidgetCard(bookings: $bookings)
+//                                    WidgetCard()
 //                                        .frame(width: 170, height: 150)
 //                                        .background(Color(UIColor.white))
 //                                        .cornerRadius(25)
 //                                        .shadow(radius: 5)
 //                                }
+                                HStack(spacing: 20) {
+                                    WidgetCard(bookings: $bookings)
+                                        .frame(width: 170, height: 150)
+                                        .background(Color(UIColor.white))
+                                        .cornerRadius(25)
+                                        .shadow(radius: 5) 
+//                                    WidgetCard(bookings: $bookings)
+//                                        .frame(width: 170, height: 150)
+//                                        .background(Color(UIColor.white))
+//                                        .cornerRadius(25)
+//                                        .shadow(radius: 5)
+                                }
+                                .padding(.top, 20)
+                                .padding(.bottom, 20)
                                 
                                 
                                 
@@ -355,58 +375,6 @@ struct HomeView: View {
                     )
                     // Progress bar end
                     
-//                    // Upcoming start
-//                    HStack {
-//                        Text("Upcoming")
-//                            .font(.headline)
-//                            .fontWeight(.bold)
-//                            .padding(.top, 10)
-//                            .padding(.bottom, -20)
-//                            .padding(.leading)
-//
-//                        Spacer()
-//
-//                        Button(action: {
-//                            // Add action for View All button
-//                        }) {
-//                            Text("View all")
-//                                .font(.subheadline)
-//                                .foregroundColor(.blue)
-//                                .fontWeight(.bold)
-//                                .padding(.top, 10)
-//                                .padding(.bottom, -20)
-//                                .padding(.trailing, 20) // Added padding to the right
-//                        }
-//                    }
-//                    .padding(.bottom, 30)
-//                    .padding(.top, 30)
-//
-//                    HStack(spacing: 20) { // Adjust spacing between cards as needed
-//                        VStack {
-//                            HStack {
-//                                VStack {
-//                                    // Combining both UpcomingCardViews within a single card-like container
-//                                    VStack(spacing: 0) { // Remove spacing between the cards
-//                                        UpcomingCardView(
-//                                            propertyName: "1 Canary Wharf", propertyAddress: "You have 2 days remaining to stay", rent: "£1000", term: "Hello"
-//                                        )
-//                                        UpcomingCardView(
-//                                            propertyName: "1 Canary Wharf", propertyAddress: "You have 2 days remaining to stay", rent: "£1000", term: "Hello"
-//                                        )
-//                                    }
-//                                    .padding(5) // Reduced padding inside the card
-//                                    .background(Color.white) // Background color of the card
-//                                    .cornerRadius(20) // Rounded corners for the card
-//                                    .shadow(radius: 5) // Shadow for a card-like appearance
-//                                }
-//                                .padding(.horizontal, 15) // Reduced horizontal padding
-//                                .padding(.vertical, 5) // Reduced vertical padding
-//
-//                            }
-//                        }
-//                    }
-//
-//                    // Upcoming end
                     
                     
                     HStack {
@@ -447,7 +415,7 @@ struct HomeView: View {
                             }
                             NavigationLink(destination: CalendarBookingView()) {
                                 FourCardView(
-                                    heading: "Calendar Info",
+                                    heading: "Event Calendar",
                                     imageName: "calendar"
                                 )
                             }
@@ -569,6 +537,7 @@ struct HomeView: View {
             }
         }
         .navigationBarHidden(true) // Hide the navigation bar to show the hamburger menu instead
+        .commonNavigation(navigationTitle: "Home", showAlert: $showAlert, alertMessage: alertMessage)
     }
 }
 

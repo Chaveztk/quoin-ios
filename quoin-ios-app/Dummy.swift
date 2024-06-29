@@ -142,7 +142,7 @@ struct SideMenuView_Previews: PreviewProvider {
 
 
 
-
+//
 //import SwiftUI
 //
 //struct CalendarBookingView: View {
@@ -208,7 +208,7 @@ struct SideMenuView_Previews: PreviewProvider {
 //            VStack {
 //                ForEach(events, id: \.self) { event in
 //                    EventRowView(event: event)
-//                        .background(Color(UIColor.lightGray))
+//                        .background(Color(hex: "#F5F5F7")) // Background color of the circle
 //                        .cornerRadius(5)
 //                        .padding(2)
 //                }
