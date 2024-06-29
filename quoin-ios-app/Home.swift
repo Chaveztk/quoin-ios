@@ -7,6 +7,8 @@ struct HomeView: View {
     var isLandlord: Bool = false
     var isDirector: Bool = false
     var username: String = ""
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     @State private var isBellModalVisible = false // State for bell modal
     
     @State private var searchText = ""
@@ -569,6 +571,7 @@ struct HomeView: View {
             }
         }
         .navigationBarHidden(true) // Hide the navigation bar to show the hamburger menu instead
+        .commonNavigation(navigationTitle: "Home", showAlert: $showAlert, alertMessage: alertMessage)
     }
 }
 
