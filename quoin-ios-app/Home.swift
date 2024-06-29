@@ -11,7 +11,7 @@ struct HomeView: View {
     
     @State private var searchText = ""
     @State private var activeButton: Int? = nil // State to track the active button
-    @State private var selectedSection: String? = "Upcoming" // State to track the selected section
+    @State private var selectedSection: String? = "Up Coming" // State to track the selected section
     //    @State private var isSidebarOpen = false // State variable to control sidebar
     @State private var showMenu = false // State for showing side menu
     @State private var selectedTab = 0 // State for selected tab
