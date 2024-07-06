@@ -11,8 +11,7 @@ import SwiftUI
 struct quoin_ios_appApp: App {
     var body: some Scene {
         WindowGroup {
-//            LogInView()
-            HomeView()
+            LogInView()
         }
     }
 }

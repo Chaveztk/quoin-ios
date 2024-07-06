@@ -7,10 +7,11 @@ struct HomeView: View {
     var isLandlord: Bool = false
     var isDirector: Bool = false
     var username: String = ""
+    @State private var tenancies: [(Tenancy, String)] = []
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     @State private var isBellModalVisible = false // State for bell modal
-    
+    @State private var isLoading: Bool = true
     @State private var searchText = ""
     @State private var activeButton: Int? = nil // State to track the active button
     @State private var selectedSection: String? = "Up Coming" // State to track the selected section
@@ -128,6 +129,7 @@ struct HomeView: View {
                         
                         // Random image and text underneath
                         VStack {
+                            Loading(isLoading:$isLoading)
                             
                             // Buttin in a row start
                             
@@ -233,8 +235,9 @@ struct HomeView: View {
                                         // Carousel of 4 cards start
                                         
                                         TabView {
-                                            ForEach(0..<3) { index in
-                                                NavigationLink(destination: PropertyView()) {
+                                            ForEach(tenancies, id: \.0.pk) { tenancy, address in
+                                                NavigationLink(destination:PropertyView(tenancyId: tenancy.pk) //PropertyView()
+                                                ) {
                                                     CardView {
                                                         VStack(alignment: .leading) {
                                                             HStack {
@@ -256,12 +259,12 @@ struct HomeView: View {
 //                                                                    .foregroundColor(.black)
 //                                                                    .clipShape(Circle())
 //                                                                    .padding(.trailing, 10)
-                                                                Text("1 Canary Wharf")
+                                                                Text(address)
                                                                     .font(.subheadline)
                                                                     .foregroundColor(.black)
                                                                     .fontWeight(.bold)
                                                                 Spacer()
-                                                                Text("Mar 23, 2024")
+                                                                Text(tenancy.rent_pm_swift)
                                                                     .font(.subheadline)
                                                                     .foregroundColor(.gray)
                                                             }
@@ -269,7 +272,6 @@ struct HomeView: View {
                                                         }
                                                         .padding()
                                                     }
-                                                    .tag(index)
                                                 }
                                             }
                                         }
@@ -560,10 +562,29 @@ struct HomeView: View {
                     .edgesIgnoringSafeArea(.all)
                 }
             }
+            .onAppear {
+                Task {
+                    do {
+                        let tenanciesList = try await fetchDataList(modelType: Tenancy.self, pivot: "tenancy", search: username)
+                        for tenancy in tenanciesList {
+                            let property = try await fetchData(modelType: Estate.self, url: tenancy.property)
+                            let address = property.address
+                            let tenancyDetails = (tenancy, address)
+                            tenancies.append(tenancyDetails)
+                        }
+                        isLoading = false
+                    } catch {
+                        isLoading = false
+                        showAlert = true
+                        alertMessage = "Error loading data. \(error)"
+                    }
+                }
+            }
         }
         .navigationBarHidden(true) // Hide the navigation bar to show the hamburger menu instead
         .commonNavigation(navigationTitle: "Home", showAlert: $showAlert, alertMessage: alertMessage)
     }
+    
 }
 
 

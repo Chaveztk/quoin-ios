@@ -7,12 +7,14 @@ struct PropertyView: View {
     @State private var navigateToHome = false
     @State private var activeSection: String? = "Term"
     @State private var selectedGrade: EPCGrade = .b // Default EPC grade
+    var tenancyId: URL
+    @State private var tenancy: Tenancy?
+    @State private var estate: Estate?
+    @State private var mainPicture: Picture?
+    @State private var alertMessage: String = ""
+    @State private var showAlert: Bool = false
+    @State private var isLoading: Bool = true
     @Environment(\.presentationMode) var presentationMode // Environment variable to dismiss the view
-    
-    
-    
-    
-    
     
     var body: some View {
         NavigationStack {
@@ -20,6 +22,7 @@ struct PropertyView: View {
                 Background()
                 ScrollView(.vertical) {
                     VStack {
+                        Loading(isLoading:$isLoading)
                         
                         
                         VStack {
@@ -73,11 +76,13 @@ struct PropertyView: View {
                     //                            BackgroundImage(imageUrl: "https://www.bankrate.com/2022/08/04093343/Buying-a-house-with-an-LLC.jpg?auto=webp&optimize=high&crop=16:9&width=912")
                     //                                .frame(height: UIScreen.main.bounds.height / 4) // Set the height to half the screen
                     //                                .edgesIgnoringSafeArea(.top) // Ignore safe area to cover the status bar
-                    Image("TerracedHouse")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: .infinity)
-                    
+                    if let image = mainPicture, let dataImage = Data(base64Encoded: image.image, options: .ignoreUnknownCharacters) {
+                        let image_ = UIImage(data: dataImage)
+                        Image(uiImage: image_ ?? UIImage())
+                            .resizable()
+                            .ignoresSafeArea()
+                            .aspectRatio(contentMode: .fill)
+                    }
                     //                        .clipShape(RoundedRectangle(cornerRadius: 10)) // Add border radius
                     //                        .shadow(radius: 5)
                     
@@ -109,41 +114,44 @@ struct PropertyView: View {
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
                     
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("7 Limes Grove")
-                                .font(.headline)
-                                .padding(.horizontal)
-                                .fontWeight(.bold)
-                            Spacer()
-                            HStack(spacing: 1) { // Adjust spacing as needed
-                                Text("£2000.00")
+                    if let tenancy = tenancy, let estate = estate {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(estate.address)
                                     .font(.headline)
+                                    .padding(.horizontal)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.black) // Ensure the foreground color is set to black
-                                Text("pcm")
-                                    .font(.caption)
+                                Spacer()
+                                HStack(spacing: 1) { // Adjust spacing as needed
+                                    Text(tenancy.rent_pm_swift)
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.black) // Ensure the foreground color is set to black
+                                    Text("pcm")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.trailing) // Add padding only to the right side of the inner HStack
+                            }
+                            .padding(.top, 15)
+                            
+                            HStack {
+                                
+                                Text(estate.postcode)
+                                    .font(.footnote)
+                                    .padding(.horizontal)
                                     .fontWeight(.bold)
                                     .foregroundColor(.gray)
+                                    .padding(.bottom, 10)
+                                Spacer()
+                                //                                Text("Per Calender Month")
+                                //                                    .font(.footnote)
+                                //                                    .padding(.horizontal)
+                                //                                    .fontWeight(.bold)
+                                //                                    .foregroundColor(.gray)
+                                //                                    .padding(.bottom, 10)
                             }
-                            .padding(.trailing) // Add padding only to the right side of the inner HStack
-                        }
-                        .padding(.top, 15)
-                        HStack {
-                            
-                            Text("E14 5DR")
-                                .font(.footnote)
-                                .padding(.horizontal)
-                                .fontWeight(.bold)
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 10)
-                            Spacer()
-                            //                                Text("Per Calender Month")
-                            //                                    .font(.footnote)
-                            //                                    .padding(.horizontal)
-                            //                                    .fontWeight(.bold)
-                            //                                    .foregroundColor(.gray)
-                            //                                    .padding(.bottom, 10)
                         }
                         
                         
@@ -156,13 +164,12 @@ struct PropertyView: View {
                         HStack(spacing: 15) {
                             Spacer() // Add spacer to evenly distribute content
                             
-                            PropertyDetails(imageName: "bed.double", text: "Bedroom 2")
+                            PropertyDetails(imageName: "bed.double", text: estate.number_beds_string)
                             
-                            PropertyDetails(imageName: "drop", text: "Bathroom 2")
+                            PropertyDetails(imageName: "drop", text: estate.number_baths_string)
+                            PropertyDetails(imageName: "ruler", text: estate.sq_ft_string)
                             
-                            PropertyDetails(imageName: "checkmark.seal", text: "Parking Space 2")
-                            
-                            PropertyDetails(imageName: "ruler", text: "Sqr ft 100")
+                            //PropertyDetails(imageName: "checkmark.seal", text: "Parking Space 2")
                             
                             Spacer() // Add spacer to evenly distribute content
                         }
@@ -177,9 +184,7 @@ struct PropertyView: View {
                         //                                                        .shadow(radius: 2)
                         .font(.caption2)
                         .padding(.top, 20)
-                        
-                        
-                        
+                    
                         
                         
                         
@@ -424,7 +429,6 @@ struct PropertyView: View {
                         .padding(.horizontal)
                         
                     }
-                    .padding(.bottom, 20)
                     
                     
                     HStack {
@@ -521,15 +525,46 @@ struct PropertyView: View {
                 
                 
                 ToolbarItem(placement: .navigationBarLeading) {
+                    if let estate = estate{
+                        Text(estate.address)
+                            .padding(.trailing)
+                            .foregroundColor(.black) // Customize the color if needed
+                            .fontWeight(.bold)
+                    } else {
+                        if isLoading == true {
+                            Text("Loading...")
+                                .padding(.trailing)
+                                .foregroundColor(.black)
+                                .fontWeight(.bold)
+                        } else {
+                            Text("Unknown address")
+                                .padding(.trailing)
+                                .foregroundColor(.black)
+                                .fontWeight(.bold)
+                        }
+                    }
                     
-                    Text("7 Limes Grove")
-                        .padding(.leading, 90)
-                        .foregroundColor(.black) // Customize the color if needed
-                        .fontWeight(.bold)
-
                     
                 }
-                
+            
+            }
+            .onAppear {
+                Task {
+                    do {
+                        tenancy = try await fetchData(modelType: Tenancy.self, url: tenancyId)
+                        if let tenancy = tenancy {
+                            estate = try await fetchData(modelType: Estate.self, url: tenancy.property)
+                            if let estate = estate, let pictures = estate.pictures, let pictureUrl = pictures.first {
+                                mainPicture = try await fetchData(modelType: Picture.self, url: pictureUrl)
+                            }
+                        }
+                        isLoading = false
+                    } catch {
+                        isLoading = false
+                        showAlert = true
+                        alertMessage = "Cannot retrieve data for this tenancy. \(error)"
+                    }
+                }
             }
         }
     }
@@ -702,7 +737,7 @@ let loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed e
 
 
 #Preview {
-    PropertyView()
+    PropertyView(tenancyId: URL(string:"http://me-quoin-management.us-east-1.elasticbeanstalk.com/api/tenancy/3ced92b4-5cf2-46b3-bc1f-8065a6a72d96")!)
 }
 
 

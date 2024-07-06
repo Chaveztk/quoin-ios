@@ -41,7 +41,7 @@ func makePostRequest<T: Encodable>(url: URL, method: String, jsonData: T) async 
 func buildUrl(pivot: String, search: String?) -> URL? {
     let search = search ?? ""
     guard let searchEncoded = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-    return URL(string: "https://me-quoin-management.us-east-1.elasticbeanstalk.com/api/\(pivot)/?search=\(searchEncoded)")
+    return URL(string: "http://me-quoin-management.us-east-1.elasticbeanstalk.com/api/\(pivot)/?search=\(searchEncoded)")
 }
 
 func fetchData<T: CodableWithPK>(modelType: T.Type, url: URL) async throws -> T {
