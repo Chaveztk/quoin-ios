@@ -26,283 +26,299 @@ struct PaymentView: View {
     
     
     var body: some View {
-        VStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 5) {
-                    
-                    VStack(alignment: .leading) {
+        NavigationStack {
+            ZStack {
+                Background()
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 5) {
                         
-                        
-                        // Information display
-                        if selectedOption == "balanceTransfer" {
-                            VStack(alignment: .center) {
-                                Text("Total Balance")
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                Text("£700.00")
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                Text("Payment in full")
-                                    .font(.footnote)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.gray)
-                                    .padding(.bottom, 20)
-                            }
-                            .frame(maxWidth: .infinity)
+                        VStack(alignment: .leading, spacing: 5) {
                             
-                        } else if selectedOption == "otherOption" {
-                            VStack(alignment: .center) {
-                                Text("Total Balance")
+                            VStack(alignment: .leading) {
+                                
+                                // Information display
+                                if selectedOption == "balanceTransfer" {
+                                    VStack(alignment: .center) {
+                                        Text("Total Balance")
+                                            .font(.body)
+                                            .fontWeight(.bold)
+                                        Text("£700.00")
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                        Text("Payment in full")
+                                            .font(.footnote)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.gray)
+                                            .padding(.bottom, 20)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    
+                                } else if selectedOption == "otherOption" {
+                                    VStack(alignment: .center) {
+                                        Text("Total Balance")
+                                            .font(.body)
+                                            .fontWeight(.bold)
+                                        Text("£350.00")
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                        Text("Payment 1 of 2")
+                                            .font(.footnote)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.gray)
+                                            .padding(.bottom, 20)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                }
+                                
+                                // Title above the cards
+                                Text("Payment Options")
                                     .font(.body)
                                     .fontWeight(.bold)
-                                Text("£350.00")
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                Text("Payment 1 of 2")
-                                    .font(.footnote)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.gray)
-                                    .padding(.bottom, 20)
+                                    .padding(.leading)
+                                    .padding(.top, 25)
                                 
+                                
+                                // First Card
+                                BalanceCardView(
+                                    title: "Total Account balance",
+                                    subtitle: "Pay in full",
+                                    number: "",
+                                    isSelected: selectedOption == "balanceTransfer",
+                                    action: {
+                                        selectedOption = "balanceTransfer"
+                                    },
+                                    isCreditCard: false // Not a credit card
+                                )
+                                .padding(.bottom, 5)
+                                
+                                // Second Card
+                                BalanceCardView(
+                                    title: "Account balance",
+                                    subtitle: "Payment 1 of 2",
+                                    number: "",
+                                    isSelected: selectedOption == "otherOption",
+                                    action: {
+                                        selectedOption = "otherOption"
+                                    },
+                                    isCreditCard: false // Not a credit card
+                                )
                             }
-                            .frame(maxWidth: .infinity)
-                            //                            .padding()
                         }
+//                        .padding(.top)
+//                        .padding(.bottom)
+//                        .background(Color.white)
+//                        .cornerRadius(25)
+//                        .padding(.horizontal)
                         
-                        // Title above the cards
-                        Text("Payment Options")
-                            .font(.body)
-                            .fontWeight(.bold)
-                        //                            .padding(.top, 20)
-                            .padding(.leading)
-                        
-                        // First Card
-                        BalanceCardView(
-                            title: "Total Account balance",
-                            subtitle: "Pay in full",
-                            number: "",
-                            isSelected: selectedOption == "balanceTransfer",
-                            action: {
-                                selectedOption = "balanceTransfer"
-                            },
-                            isCreditCard: false // Not a credit card
-                        )
-                        .padding(.bottom, 5)
-                        
-                        // Second Card
-                        BalanceCardView(
-                            title: "Account balance",
-                            subtitle: "Payment 1 of 2",
-                            number: "",
-                            isSelected: selectedOption == "otherOption",
-                            action: {
-                                selectedOption = "otherOption"
-                            },
-                            isCreditCard: false // Not a credit card
-                        )
-                    }
-                    
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        
-                        VStack(spacing: 20) {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 20) {
-                                    PaymentMethodCardView(
-                                        heading: "•••• 4921",
-                                        imageName: "VisaIcon",
-                                        systemImageName: "",
-                                        showTick: selectedCard == 0,
-                                        action: {
-                                            self.selectedCard = 0
-                                            self.isPaymentMethodModalVisible.toggle() // Toggle modal visibility
-                                        },
-                                        isPaymentMethodModalVisible: $isPaymentMethodModalVisible
-                                    )
-                                    
-                                    PaymentMethodCardView(
-                                        heading: "•••• 7766",
-                                        imageName: "MasterCard",
-                                        systemImageName: "",
-                                        showTick: selectedCard == 1,
-                                        action: {
-                                            self.selectedCard = 1
-                                            self.isPaymentMethodModalVisible.toggle() // Toggle modal visibility
-                                        },
-                                        isPaymentMethodModalVisible: $isPaymentMethodModalVisible
-                                    )
-                                    
-                                    PaymentMethodCardView(
-                                        heading: "•••• 7766",
-                                        imageName: "MasterCard",
-                                        systemImageName: "",
-                                        showTick: selectedCard == 2,
-                                        action: {
-                                            self.selectedCard = 2
-                                            self.isPaymentMethodModalVisible.toggle() // Toggle modal visibility
-                                        },
-                                        isPaymentMethodModalVisible: $isPaymentMethodModalVisible
-                                    )
+                        VStack(alignment: .leading, spacing: 20) {
+                            
+                            VStack(spacing: 20) {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 20) {
+                                        PaymentMethodCardView(
+                                            heading: "•••• 4921",
+                                            imageName: "VisaIcon",
+                                            systemImageName: "",
+                                            showTick: selectedCard == 0,
+                                            action: {
+                                                self.selectedCard = 0
+                                                self.isPaymentMethodModalVisible.toggle() // Toggle modal visibility
+                                            },
+                                            isPaymentMethodModalVisible: $isPaymentMethodModalVisible
+                                        )
+                                        
+                                        PaymentMethodCardView(
+                                            heading: "•••• 7766",
+                                            imageName: "MasterCard",
+                                            systemImageName: "",
+                                            showTick: selectedCard == 1,
+                                            action: {
+                                                self.selectedCard = 1
+                                                self.isPaymentMethodModalVisible.toggle() // Toggle modal visibility
+                                            },
+                                            isPaymentMethodModalVisible: $isPaymentMethodModalVisible
+                                        )
+                                        
+                                        PaymentMethodCardView(
+                                            heading: "•••• 7766",
+                                            imageName: "MasterCard",
+                                            systemImageName: "",
+                                            showTick: selectedCard == 2,
+                                            action: {
+                                                self.selectedCard = 2
+                                                self.isPaymentMethodModalVisible.toggle() // Toggle modal visibility
+                                            },
+                                            isPaymentMethodModalVisible: $isPaymentMethodModalVisible
+                                        )
+                                        
+                                    }
+                                    .padding(.horizontal) // Add padding if needed
+                                    .padding(.bottom, 30)
+                                    .padding(.top, 30)
                                     
                                 }
-                                .padding(.horizontal) // Add padding if needed
-                                .padding(.bottom, 30)
-                                .padding(.top, 30)
-                                
                             }
                         }
-                    }
-                    
-                    HStack {
-                        Text("Recent Transactions")
-                            .fontWeight(.bold)
-                            .font(.body)
-                            .padding(.top, 20)
-                            .padding(.bottom, 10)
-                    }
-                    .padding(.horizontal) // Add padding if needed
-                    
-                    VStack {
-                        ScrollView(.vertical, showsIndicators: false) {
+                        
+                        HStack {
+                            Text("Recent Transactions")
+                                .fontWeight(.bold)
+                                .font(.body)
+                                .padding(.top, 20)
+                                .padding(.bottom, 10)
+                        }
+                        .padding(.horizontal) // Add padding if needed
+                        
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.white)
                             
-                            ForEach(0..<3) { index in
+                            VStack {
+                                ScrollView(.vertical, showsIndicators: false) {
+                                    
+                                    ForEach(0..<3) { index in
+                                        Button(action: {
+                                            selectedTerm = "Paid"
+                                            isPaymentHistoryModalView.toggle()
+                                        }) {
+                                            PaymentHistoryCardView(
+                                                propertyName: "Canary Wharf \(index + 1)",
+                                                propertyAddress: "Received 11th April 24",
+                                                rent: "£1000.00",
+                                                term: "Paid",
+                                                paid: ""
+                                            )
+                                            .padding(.horizontal, 15)
+                                        }
+                                    }
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 10)
+                                }
+                            }
+//                            .padding()
+                        }
+                        
+                        .padding(.horizontal)
+                        
+                        Button(action: { }) {
+                            HStack {
+                                Image(systemName: "creditcard") // Payment icon
+                                    .foregroundColor(.white)
+                                    .padding(.trailing, 2) // Adjust the spacing between icon and text
+                                Text("Pay")
+                                    .font(.title3)
+                                    .foregroundColor(.white)
+                                    .fontWeight(.bold)
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.black)
+                            .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 30)
+                        
+                        
+                        
+                        
+                        VStack {
+                            //                        Text(balanceText)
+                            //                            .font(.body)
+                            //                            .fontWeight(.bold)
+                            //
+                            //                        Text(amountText)
+                            //                            .font(.title)
+                            //                            .fontWeight(.bold)
+                            ////                            .padding(.bottom, 20) // Adjusted padding
+                            //                        Text(sumText)
+                            //                            .font(.footnote)
+                            //                            .fontWeight(.bold)
+                            //                            .foregroundColor(.gray)
+                            //                            .padding(.bottom, 20) // Adjusted padding
+                            
+                            HStack(spacing: 20) { // Added spacing between buttons
                                 Button(action: {
-                                    selectedTerm = "Paid"
-                                    isPaymentHistoryModalView.toggle()
+                                    // Change the text when withdraw button is pressed
+                                    //                                balanceText = "Account Balance"
+                                    //                                amountText = "£3000.00"
+                                    //                                sumText = "Payment 1 of 2"
                                 }) {
-                                    PaymentHistoryCardView(
-                                        propertyName: "Canary Wharf \(index + 1)",
-                                        propertyAddress: "Received 11th April 24",
-                                        rent: "£1000.00",
-                                        term: "Paid",
-                                        paid: ""
-                                    )
-                                    .padding(.horizontal, 15)
-//                                    .padding(.top, 5)
-                                    
-                                    
+                                    //                                HStack {
+                                    //                                    Image(systemName: "arrow.down.circle.fill")
+                                    //                                    Text("Total")
+                                    //                                        .fontWeight(.bold)
+                                    //                                }
+                                    //                                .padding()
+                                    //                                .frame(width: 150, height: 50) // Fixed width and height
+                                    //                                .background(Color.black)
+                                    //                                .foregroundColor(.white)
+                                    //                                .cornerRadius(30)
+                                }
+                                
+                                Button(action: {
+                                    // Change the text when deposit button is pressed
+                                    //                                balanceText = "Total Balance"
+                                    //                                amountText = "£1000.00"
+                                    //                                sumText = "Payment In Full"
+                                }) {
+                                    //                                HStack {
+                                    //                                    Image(systemName: "arrow.up.circle.fill")
+                                    //                                    Text("Balance")
+                                    //                                        .fontWeight(.bold)
+                                    //                                }
+                                    //                                .padding()
+                                    //                                .frame(width: 150, height: 50) // Fixed width and height
+                                    //                                .background(Color.black)
+                                    //                                .foregroundColor(.white)
+                                    //                                .cornerRadius(30)
                                 }
                             }
-                            .padding(.top, 10)
-                            .padding(.bottom, 10)
-                        }
-                        
-                    }
-                    
-                    
-                    
-                    VStack {
-                        //                        Text(balanceText)
-                        //                            .font(.body)
-                        //                            .fontWeight(.bold)
-                        //
-                        //                        Text(amountText)
-                        //                            .font(.title)
-                        //                            .fontWeight(.bold)
-                        ////                            .padding(.bottom, 20) // Adjusted padding
-                        //                        Text(sumText)
-                        //                            .font(.footnote)
-                        //                            .fontWeight(.bold)
-                        //                            .foregroundColor(.gray)
-                        //                            .padding(.bottom, 20) // Adjusted padding
-                        
-                        HStack(spacing: 20) { // Added spacing between buttons
-                            Button(action: {
-                                // Change the text when withdraw button is pressed
-                                //                                balanceText = "Account Balance"
-                                //                                amountText = "£3000.00"
-                                //                                sumText = "Payment 1 of 2"
-                            }) {
-                                //                                HStack {
-                                //                                    Image(systemName: "arrow.down.circle.fill")
-                                //                                    Text("Total")
-                                //                                        .fontWeight(.bold)
-                                //                                }
-                                //                                .padding()
-                                //                                .frame(width: 150, height: 50) // Fixed width and height
-                                //                                .background(Color.black)
-                                //                                .foregroundColor(.white)
-                                //                                .cornerRadius(30)
-                            }
+                            //                        .padding()
                             
-                            Button(action: {
-                                // Change the text when deposit button is pressed
-                                //                                balanceText = "Total Balance"
-                                //                                amountText = "£1000.00"
-                                //                                sumText = "Payment In Full"
-                            }) {
-                                //                                HStack {
-                                //                                    Image(systemName: "arrow.up.circle.fill")
-                                //                                    Text("Balance")
-                                //                                        .fontWeight(.bold)
-                                //                                }
-                                //                                .padding()
-                                //                                .frame(width: 150, height: 50) // Fixed width and height
-                                //                                .background(Color.black)
-                                //                                .foregroundColor(.white)
-                                //                                .cornerRadius(30)
-                            }
+                            //                        Spacer()
                         }
-                        //                        .padding()
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         
+                        //                    HStack(spacing: 20) {
                         //                        Spacer()
+                        //                        CircleButton(imageName: "arrow.down.circle.fill", label: "Add Card")
+                        //                            .onTapGesture {
+                        //                                isPayFullModalVisible = true
+                        //                            }
+                        //                        CircleButton(imageName: "arrow.right.circle.fill", label: "Transfer")
+                        //                            .onTapGesture {
+                        //                                isTransferModalVisible = true
+                        //                            }
+                        //                        CircleButton(imageName: "arrow.left.arrow.right.circle.fill", label: "Convert")
+                        //                            .onTapGesture {
+                        //                                isConvertModalVisible = true
+                        //                            }
+                        //                        Spacer()
+                        //                    }
+                        //                    .padding(.horizontal)
+                        //                    .padding(.bottom, 10)
                     }
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    //                    HStack(spacing: 20) {
-                    //                        Spacer()
-                    //                        CircleButton(imageName: "arrow.down.circle.fill", label: "Add Card")
-                    //                            .onTapGesture {
-                    //                                isPayFullModalVisible = true
-                    //                            }
-                    //                        CircleButton(imageName: "arrow.right.circle.fill", label: "Transfer")
-                    //                            .onTapGesture {
-                    //                                isTransferModalVisible = true
-                    //                            }
-                    //                        CircleButton(imageName: "arrow.left.arrow.right.circle.fill", label: "Convert")
-                    //                            .onTapGesture {
-                    //                                isConvertModalVisible = true
-                    //                            }
-                    //                        Spacer()
-                    //                    }
-                    //                    .padding(.horizontal)
-                    //                    .padding(.bottom, 10)
+                    .padding(.top, 30)
                 }
-                .padding(.top, 30)
+                
+                Spacer()
+                
+                
             }
-            
-            Spacer()
-            
-            Button(action: { }) {
-                HStack {
-                    Image(systemName: "creditcard") // Payment icon
-                        .foregroundColor(.white)
-                        .padding(.trailing, 2) // Adjust the spacing between icon and text
-                    Text("Pay")
-                        .font(.title3)
-                        .foregroundColor(.white)
-                        .fontWeight(.bold)
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.black)
-                .cornerRadius(10)
+            .sheet(isPresented: $isPayFullModalVisible) {
+                PayFullModalView()
+                    .presentationDetents([.fraction(0.6)]) // Open modal to half screen
             }
-            .padding(.horizontal)
-        }
-        .sheet(isPresented: $isPayFullModalVisible) {
-            PayFullModalView()
-                .presentationDetents([.fraction(0.6)]) // Open modal to half screen
-        }
-        .sheet(isPresented: $isTransferModalVisible) {
-            TransferModalView()
-                .presentationDetents([.fraction(0.6)]) // Open modal to half screen
-        }
-        .sheet(isPresented: $isConvertModalVisible) {
-            ConvertModalView()
-                .presentationDetents([.fraction(0.5)]) // Open modal to half screen
+            .sheet(isPresented: $isTransferModalVisible) {
+                TransferModalView()
+                    .presentationDetents([.fraction(0.6)]) // Open modal to half screen
+            }
+            .sheet(isPresented: $isConvertModalVisible) {
+                ConvertModalView()
+                    .presentationDetents([.fraction(0.5)]) // Open modal to half screen
+            }
         }
     }
 }

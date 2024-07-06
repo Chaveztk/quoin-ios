@@ -6,10 +6,10 @@ struct CalendarBookingView: View {
    @State private var selectedDate: Date? = nil
    
    @State private var bookings: [Date: [Event]] = [
-       Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!: [
-           Event(title: "Doctor appointment, friends and family", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!),
-           Event(title: "Doctor appointment, friends and family", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!),
-           Event(title: "Doctor appointment, friends and family", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 30))!)
+       Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 2))!: [
+           Event(title: "Doctor appointment, friends and family", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
+           Event(title: "Doctor appointment, friends and family", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
+           Event(title: "Doctor appointment, friends and family", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!)
        ]
    ]
    
@@ -72,7 +72,7 @@ struct CalendarBookingView: View {
                        .frame(maxWidth: .infinity) // Ensure VStack takes full width
 
 //                       WidgetCard(bookings: $bookings)
-//                           .frame(width: 170, height: 150)
+//                           .frame(width: 360, height: 150)
 //                           .background(Color(UIColor.white))
 //                           .cornerRadius(25)
 //                           .shadow(radius: 5)
@@ -610,11 +610,93 @@ struct WidgetCard: View {
                Text("No events Today")
                    .font(.caption)
                    .foregroundColor(.gray)
+                   .fontWeight(.bold)
                    .padding()
            }
        }
    }
 }
+
+
+
+
+
+//struct WidgetCard: View {
+//    @Binding var bookings: [Date: [Event]]
+//    
+//    private var currentDate: Date {
+//        Date()
+//    }
+//    
+//    private var dateFormatter: DateFormatter {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "EEEE, d'\(daySuffix(from: Calendar.current.component(.day, from: currentDate)))'"
+//        return formatter
+//    }
+//    
+//    private func daySuffix(from day: Int) -> String {
+//        switch day {
+//        case 1, 21, 31:
+//            return "st"
+//        case 2, 22:
+//            return "nd"
+//        case 3, 23:
+//            return "rd"
+//        default:
+//            return "th"
+//        }
+//    }
+//    
+//    var body: some View {
+//        VStack(alignment: .leading) {
+//            HStack {
+//                VStack(alignment: .leading) {
+//                    if let events = bookings[Calendar.current.startOfDay(for: currentDate)] {
+//                        HStack {
+//                            Text(dateFormatter.string(from: currentDate))
+//                                .font(.headline)
+//                                .fontWeight(.bold)
+//                                .padding(.top, 30)
+//                        }
+//                        ScrollView(.vertical, showsIndicators: false) {
+//                            VStack(spacing: 8) {
+//                                ForEach(events.prefix(4), id: \.self) { event in
+//                                    EventRowView(event: event, showImage: false, textColor: .black, titleFontSize: .caption, timeFontSize: .caption2, indicatorShape: .rectangle)
+//                                }
+//                            }
+//                            .padding(.horizontal, -25)
+//                        }
+//                        .frame(height: 130)
+//                    } else {
+//                        Text("No events Today")
+//                            .font(.caption)
+//                            .foregroundColor(.gray)
+//                            .padding()
+//                    }
+//                }
+//                
+//                Spacer()
+//                
+//                VStack(alignment: .trailing, spacing: 10) {
+//                    VStack(alignment: .trailing) {
+//                        Text("\(bookings[Calendar.current.startOfDay(for: currentDate)]?.count ?? 0)")
+//                            .font(.title3)
+//                            .fontWeight(.bold)
+//                        Text("Today event")
+//                            .font(.caption)
+//                    }
+//                    Spacer()
+//                }
+//            }
+//            .padding(.horizontal)
+//            .padding(.vertical, 10)
+//        }
+//        .padding(.horizontal, 5)
+//        .background(Color.white)
+//        .cornerRadius(30)
+//        .shadow(radius: 5)
+//    }
+//}
 
 
 

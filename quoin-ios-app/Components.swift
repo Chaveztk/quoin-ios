@@ -105,7 +105,7 @@ extension Color {
 
 struct Background: View {
     var body: some View {
-        LinearGradient(gradient: Gradient(colors: [Color(hex: "#FFFFFF"), Color(hex: "#FFFFFF")]), startPoint: .leading, endPoint: .bottom) // Changed to light gray
+        LinearGradient(gradient: Gradient(colors: [Color(hex: "#F5F5F7"), Color(hex: "#F5F5F7")]), startPoint: .leading, endPoint: .bottom) // Changed to light gray
             .edgesIgnoringSafeArea(.all)
     }
 }
@@ -319,7 +319,7 @@ struct ProgressbarCardView: View {
             .padding()
             .background(Color.white)
             .cornerRadius(20)
-            .shadow(radius: 5)
+//            .shadow(radius: 5)
             .padding()
 //            .padding(.top, 42) // Adjust top padding to show the underlayed card
             .offset(y: 20) // Adjust offset to show more of the underlay card

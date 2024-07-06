@@ -1,16 +1,8 @@
-//
-//  Profile.swift
-//  quoin-ios-app
-//
-//  Created by Chavez King on 08/06/2024.
-//
-
 import SwiftUI
 import Foundation
 
 struct ProfileView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-
     
     @State private var searchText = ""
     @State private var name = "James"
@@ -31,27 +23,29 @@ struct ProfileView: View {
         NavigationView {
             ZStack {
                 Background()
+                    .edgesIgnoringSafeArea(.all)
                 ScrollView {
                     VStack {
                         HStack {
-//                            Button(action: {
-//                                // Add action for the back button
-//                            }) {
-//                                Image(systemName: "chevron.left")
-//                                    .font(.title)
-//                                    .foregroundColor(.black)
-//                            }
-//                            .padding(.leading, 20)
-//                            Spacer() // Spacer before the text
-//
-//                            Button(action: {
-//                                // Add action for the plus button
-//                            }) {
-//                                Image(systemName: "plus")
-//                                    .font(.title)
-//                                    .foregroundColor(.black)
-//                            }
-//                            .padding(.trailing, 20)
+                            // Back button and plus button if needed
+                            // Uncomment and add actions if required
+                            // Button(action: {
+                            //     // Add action for the back button
+                            // }) {
+                            //     Image(systemName: "chevron.left")
+                            //         .font(.title)
+                            //         .foregroundColor(.black)
+                            // }
+                            // .padding(.leading, 20)
+                            // Spacer()
+                            // Button(action: {
+                            //     // Add action for the plus button
+                            // }) {
+                            //     Image(systemName: "plus")
+                            //         .font(.title)
+                            //         .foregroundColor(.black)
+                            // }
+                            // .padding(.trailing, 20)
                         }
                         .padding(.top, 20)
                         .padding(.horizontal)
@@ -125,7 +119,7 @@ struct ProfileView: View {
                                     HStack(spacing: 5) {
                                         Text("Payment Methods")
                                     }
-                                        .foregroundColor(.gray)
+                                    .foregroundColor(.gray)
                                     Spacer()
                                     Image("VisaIcon")
                                         .resizable()
@@ -207,6 +201,7 @@ struct ProfileView: View {
         }
     }
 }
+
 
 #Preview {
     ProfileView()
