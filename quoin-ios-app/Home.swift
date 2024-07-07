@@ -20,7 +20,7 @@ struct HomeView: View {
     @State private var selectedTab = 0 // State for selected tab
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 5))!: [
+        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 7))!: [
             Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Dentis appointment", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Apple appointment", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!)
@@ -129,7 +129,6 @@ struct HomeView: View {
                         
                         // Random image and text underneath
                         VStack {
-                            Loading(isLoading:$isLoading)
                             
                             // Buttin in a row start
                             
@@ -175,19 +174,18 @@ struct HomeView: View {
                                 }
                                 .padding(.bottom, 30)
                                 .padding(.top, 10)
-                                HStack(spacing: 20) {
-                                    WidgetCard(bookings: $bookings)
-//                                        .frame(width: 300, height: 150)
-                                        .frame(width: 170, height: 150)
-                                        .background(Color(UIColor.white))
-                                        .cornerRadius(25)
-                                        .shadow(radius: 5)
-                                    WidgetCard(bookings: $bookings)
-                                        .frame(width: 170, height: 150)
-                                        .background(Color(UIColor.white))
-                                        .cornerRadius(25)
-                                        .shadow(radius: 5)
-                                }
+//                                HStack(spacing: 20) {
+//                                    WidgetCard(bookings: $bookings)
+//                                        .frame(width: 170, height: 150)
+//                                        .background(Color(UIColor.white))
+//                                        .cornerRadius(25)
+//                                        .shadow(radius: 5)
+//                                    WidgetCard(bookings: $bookings)
+//                                        .frame(width: 170, height: 150)
+//                                        .background(Color(UIColor.white))
+//                                        .cornerRadius(25)
+//                                        .shadow(radius: 5)
+//                                }
                                 //                                .padding(.top, 20)
                                 //                                .padding(.bottom, 20)
                                 
@@ -235,6 +233,8 @@ struct HomeView: View {
                                         // Carousel of 4 cards start
                                         
                                         TabView {
+                                            Loading(isLoading:$isLoading)
+
                                             ForEach(tenancies, id: \.0.pk) { tenancy, address in
                                                 NavigationLink(destination:PropertyView(tenancyId: tenancy.pk) //PropertyView()
                                                 ) {

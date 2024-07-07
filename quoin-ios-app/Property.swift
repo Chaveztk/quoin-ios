@@ -6,7 +6,7 @@ struct PropertyView: View {
     @State private var selectedSection: String? = nil
     @State private var navigateToHome = false
     @State private var activeSection: String? = "Term"
-    @State private var selectedGrade: EPCGrade = .b // Default EPC grade
+    @State private var selectedGrade: EPCGrade = .a // Default EPC grade
     var tenancyId: URL
     @State private var tenancy: Tenancy?
     @State private var estate: Estate?
@@ -406,27 +406,7 @@ struct PropertyView: View {
                         // Progress bar end
                         
                         .padding(.bottom, 30)
-                        
-                        // Additional cards
-                        VStack(spacing: 20) { // Add spacing between vertical stacks
-                            HStack(spacing: 20) {
-                                NavigationLink(destination: DocumentView()) {
-                                    
-                                    FourCardView(
-                                        heading: "Documents",
-                                        imageName: "doc.on.doc"
-                                    )
-                                    
-                                }
-                                NavigationLink(destination: MaintenanceLog()) {
-                                    FourCardView(
-                                        heading: "Maintenance",
-                                        imageName: "wrench.and.screwdriver"
-                                    )
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
+
                         
                     }
                     
@@ -504,8 +484,28 @@ struct PropertyView: View {
                     .cornerRadius(25)
                     .padding(.horizontal)
                     //                    .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                    .padding(.bottom, 30)
-                    
+                    .padding(.bottom, 20)
+                    // Additional cards
+                    VStack(spacing: 20) { // Add spacing between vertical stacks
+                        HStack(spacing: 20) {
+                            NavigationLink(destination: DocumentView()) {
+                                
+                                FourCardView(
+                                    heading: "Documents",
+                                    imageName: "doc.on.doc"
+                                )
+                                
+                            }
+                            NavigationLink(destination: MaintenanceLog()) {
+                                FourCardView(
+                                    heading: "Maintenance",
+                                    imageName: "wrench.and.screwdriver"
+                                )
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -521,7 +521,6 @@ struct PropertyView: View {
                         }
                     }
                 }
-                
                 
                 
                 ToolbarItem(placement: .navigationBarLeading) {

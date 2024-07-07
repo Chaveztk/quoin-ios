@@ -13,6 +13,7 @@
 		15EF81192C0B273D00E49249 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EF81182C0B273D00E49249 /* Models.swift */; };
 		15F15DE82C273B8200694094 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F15DE72C273B8200694094 /* Calendar.swift */; };
 		15F15DEC2C30126A00694094 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15F15DEB2C30126A00694094 /* Launch Screen.storyboard */; };
+		15F15DEE2C3A9C8000694094 /* Leftsidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F15DED2C3A9C8000694094 /* Leftsidebar.swift */; };
 		15F9DB0A2C14530000250B16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB092C14530000250B16 /* Profile.swift */; };
 		15F9DB0C2C14540E00250B16 /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB0B2C14540E00250B16 /* LogIn.swift */; };
 		15F9DB0E2C1454A500250B16 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB0D2C1454A500250B16 /* Components.swift */; };
@@ -48,6 +49,7 @@
 		15F12BE52C0B2F0E00452622 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		15F15DE72C273B8200694094 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		15F15DEB2C30126A00694094 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		15F15DED2C3A9C8000694094 /* Leftsidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leftsidebar.swift; sourceTree = "<group>"; };
 		15F9DB092C14530000250B16 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		15F9DB0B2C14540E00250B16 /* LogIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
 		15F9DB0D2C1454A500250B16 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				15F9DB0D2C1454A500250B16 /* Components.swift */,
 				15F9DB192C14767F00250B16 /* Memberlog.swift */,
 				15F9DB452C209DFA00250B16 /* AnnouncementsLog.swift */,
+				15F15DED2C3A9C8000694094 /* Leftsidebar.swift */,
 				15F9DB0F2C14648500250B16 /* TenancyDetails.swift */,
 				15F9DB112C1467E700250B16 /* Documents.swift */,
 				15F9DB3F2C1B069100250B16 /* SideBarGroup */,
@@ -254,6 +257,7 @@
 				15EF81092C0B237800E49249 /* quoin_ios_appApp.swift in Sources */,
 				15F9DB102C14648500250B16 /* TenancyDetails.swift in Sources */,
 				15F9DB382C1A2AF500250B16 /* SideMenuRowView.swift in Sources */,
+				15F15DEE2C3A9C8000694094 /* Leftsidebar.swift in Sources */,
 				15EF81172C0B239B00E49249 /* Fetcher.swift in Sources */,
 				15F9DB322C18713600250B16 /* MaintenanceLog.swift in Sources */,
 				15F9DB462C209DFA00250B16 /* AnnouncementsLog.swift in Sources */,
