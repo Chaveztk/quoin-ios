@@ -45,6 +45,7 @@ struct Estate: CodableWithPK {
     let address: String
     let postcode: String
     let sq_ft: Float?
+//    var sq_ft_string: String { if let sq_ft = sq_ft {return String(sq_ft) + String("sq ft / ") + String(sq_ft*0.092903) + String()} else {return String("N/A")}}
     var sq_ft_string: String { if let sq_ft = sq_ft {return String(sq_ft) + String(" sq ft")} else {return String("N/A")}}
     let description: String?
     let number_beds: Int?
