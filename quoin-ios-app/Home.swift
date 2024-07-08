@@ -79,14 +79,14 @@ struct HomeView: View {
                             
                             Spacer()
                             
-//                            Profile Icon
-//                            NavigationLink(destination: UpcomingView()) {
-//
-//                                Image(systemName: "line.horizontal.3")
-//                                    .font(.title)
-//                                    .foregroundColor(.black)
-//                            }
-//                            .padding(.trailing, 3)
+                            //                            Profile Icon
+                            //                            NavigationLink(destination: UpcomingView()) {
+                            //
+                            //                                Image(systemName: "line.horizontal.3")
+                            //                                    .font(.title)
+                            //                                    .foregroundColor(.black)
+                            //                            }
+                            //                            .padding(.trailing, 3)
                             //
                             Button(action: {
                                 isBellModalVisible.toggle() // Toggle bell modal visibility
@@ -135,20 +135,20 @@ struct HomeView: View {
                             VStack {
                                 
                                 
-//                                HStack(spacing: 20) {
-//                                    //                                    WidgetCard(bookings: $bookings)
-//                                    WidgetCard()
-//                                        .frame(width: 170, height: 150)
-//                                        .background(Color(UIColor.white))
-//                                        .cornerRadius(25)
-//                                        .shadow(radius: 5)
-//                                    //                                    WidgetCard(bookings: $bookings)
-//                                    WidgetCard()
-//                                        .frame(width: 170, height: 150)
-//                                        .background(Color(UIColor.white))
-//                                        .cornerRadius(25)
-//                                        .shadow(radius: 5)
-//                                }
+                                //                                HStack(spacing: 20) {
+                                //                                    //                                    WidgetCard(bookings: $bookings)
+                                //                                    WidgetCard()
+                                //                                        .frame(width: 170, height: 150)
+                                //                                        .background(Color(UIColor.white))
+                                //                                        .cornerRadius(25)
+                                //                                        .shadow(radius: 5)
+                                //                                    //                                    WidgetCard(bookings: $bookings)
+                                //                                    WidgetCard()
+                                //                                        .frame(width: 170, height: 150)
+                                //                                        .background(Color(UIColor.white))
+                                //                                        .cornerRadius(25)
+                                //                                        .shadow(radius: 5)
+                                //                                }
                                 
                                 HStack {
                                     Text("Today's Event")
@@ -160,32 +160,32 @@ struct HomeView: View {
                                     
                                     Spacer()
                                     
-//                                    Button(action: {
-//                                        // Add action for View All button
-//                                    }) {
-//                                        Text("View all")
-//                                            .font(.subheadline)
-//                                            .foregroundColor(.blue)
-//                                            .fontWeight(.bold)
-//                                            .padding(.top, 10)
-//                                            .padding(.bottom, -20)
-//                                            .padding(.trailing, 20) // Added padding to the right
-//                                    }
+                                    //                                    Button(action: {
+                                    //                                        // Add action for View All button
+                                    //                                    }) {
+                                    //                                        Text("View all")
+                                    //                                            .font(.subheadline)
+                                    //                                            .foregroundColor(.blue)
+                                    //                                            .fontWeight(.bold)
+                                    //                                            .padding(.top, 10)
+                                    //                                            .padding(.bottom, -20)
+                                    //                                            .padding(.trailing, 20) // Added padding to the right
+                                    //                                    }
                                 }
                                 .padding(.bottom, 30)
                                 .padding(.top, 10)
-//                                HStack(spacing: 20) {
-//                                    WidgetCard(bookings: $bookings)
-//                                        .frame(width: 170, height: 150)
-//                                        .background(Color(UIColor.white))
-//                                        .cornerRadius(25)
-//                                        .shadow(radius: 5)
-//                                    WidgetCard(bookings: $bookings)
-//                                        .frame(width: 170, height: 150)
-//                                        .background(Color(UIColor.white))
-//                                        .cornerRadius(25)
-//                                        .shadow(radius: 5)
-//                                }
+                                //                                HStack(spacing: 20) {
+                                //                                    WidgetCard(bookings: $bookings)
+                                //                                        .frame(width: 170, height: 150)
+                                //                                        .background(Color(UIColor.white))
+                                //                                        .cornerRadius(25)
+                                //                                        .shadow(radius: 5)
+                                //                                    WidgetCard(bookings: $bookings)
+                                //                                        .frame(width: 170, height: 150)
+                                //                                        .background(Color(UIColor.white))
+                                //                                        .cornerRadius(25)
+                                //                                        .shadow(radius: 5)
+                                //                                }
                                 //                                .padding(.top, 20)
                                 //                                .padding(.bottom, 20)
                                 
@@ -197,11 +197,11 @@ struct HomeView: View {
                                 ), buttons: ["Up Coming", "Live Maintenance", "Properties", ""], colorHex: "#F5F5F")
                                 //                                .padding(.horizontal, 40)
                                 .padding(.top, 5)
-//                            }
-//                            .background(Color(UIColor.white))
-//                            .padding(.top, 20)
-//                            .padding(.horizontal)
-//                            .cornerRadius(25)
+                                //                            }
+                                //                            .background(Color(UIColor.white))
+                                //                            .padding(.top, 20)
+                                //                            .padding(.horizontal)
+                                //                            .cornerRadius(25)
                                 
                                 
                                 
@@ -234,7 +234,7 @@ struct HomeView: View {
                                         
                                         TabView {
                                             Loading(isLoading:$isLoading)
-
+                                            
                                             ForEach(tenancies, id: \.0.pk) { tenancy, address in
                                                 NavigationLink(destination:PropertyView(tenancyId: tenancy.pk) //PropertyView()
                                                 ) {
@@ -253,12 +253,12 @@ struct HomeView: View {
                                                                     .padding(.trailing, 10)
                                                                 
                                                                 
-//                                                                Image(systemName: )
-//                                                                    .resizable()
-//                                                                    .frame(width: 40, height: 40)
-//                                                                    .foregroundColor(.black)
-//                                                                    .clipShape(Circle())
-//                                                                    .padding(.trailing, 10)
+                                                                //                                                                Image(systemName: )
+                                                                //                                                                    .resizable()
+                                                                //                                                                    .frame(width: 40, height: 40)
+                                                                //                                                                    .foregroundColor(.black)
+                                                                //                                                                    .clipShape(Circle())
+                                                                //                                                                    .padding(.trailing, 10)
                                                                 Text(address)
                                                                     .font(.subheadline)
                                                                     .foregroundColor(.black)
@@ -281,9 +281,9 @@ struct HomeView: View {
                                         
                                         // Carousel of 3 cards end
                                     }
-//                                    .background(Color.gray.opacity(0.1))
-//                                    .cornerRadius(8)
-//                                    .padding(.horizontal)
+                                    //                                    .background(Color.gray.opacity(0.1))
+                                    //                                    .cornerRadius(8)
+                                    //                                    .padding(.horizontal)
                                     .transition(.opacity)
                                 }
                                 
@@ -397,7 +397,7 @@ struct HomeView: View {
                         payNow: "Pay Now"
                     )
                     .shadow(radius: 5)
-
+                    
                     // Progress bar end
                     
                     
@@ -445,7 +445,7 @@ struct HomeView: View {
                             }
                         }
                         .shadow(radius: 5)
-
+                        
                         HStack(spacing: 20) { // Add spacing between horizontal stacks
                             NavigationLink(destination: DocumentView()) {
                                 FourCardView(
@@ -456,14 +456,14 @@ struct HomeView: View {
                             NavigationLink(destination: DirectorMemberlogView()) {
                                 FourCardView(
                                     heading: "Member log",
-//                                    heading: "Invoice log",
+                                    //                                    heading: "Invoice log",
                                     imageName: "doc.richtext"
                                 )
                             }
                             
                         }
                         .shadow(radius: 5)
-
+                        
                         
                     }
                     .padding(.horizontal)
@@ -500,44 +500,44 @@ struct HomeView: View {
                 }
                 
                 
-//                VStack {
-//                    Spacer() // This spacer pushes the HStack down
-//                    HStack {
-//                        Spacer()
-//                        NavBarButton(iconName: "house.fill", buttonText: "Home")
-//                            .padding(.vertical) // Add padding at the top and bottom
-//                        Spacer()
-//                        NavigationLink(destination: NewsFeedView()) {
-//                            NavBarButton(iconName: "newspaper.fill", buttonText: "News Feed")
-//                                .padding(.vertical) // Add padding at the top and bottom
-//                        }
-//                        Spacer()
-//                        NavigationLink(destination: AnnouncementsView()) {
-//                            NavBarButton(iconName: "megaphone.fill", buttonText: "Announcements")
-//                                .padding(.vertical) // Add padding at the top and bottom
-//                        }
-//                        Spacer()
-//                        NavigationLink(destination: ProfileView()) {
-//                            NavBarButton(iconName: "person.crop.circle", buttonText: "Profile")
-//                                .padding(.vertical) // Add padding at the top and bottom
-//                        }
-//                        Spacer()
-//                    }
-//                    .padding(.horizontal) // Add equal padding on each side
-//                    .background(
-//                        LinearGradient(
-//                            gradient: Gradient(colors: [Color(hex: "#000000"), Color(hex: "#F5F5F")]),
-//                            //                                Color(hex: "#575757")]),
-//                            startPoint: .leading,
-//                            endPoint: .trailing
-//                        )
-//                    )
-//                    .cornerRadius(35) // Apply border radius
-//                    .foregroundColor(.white) // Set text and image color to white
-//                    .padding(.horizontal)
-//                    .padding(.bottom, -40) // Bring the HStack closer to the bottom
-//                }
-//                .padding(.bottom, 20) // Bring the entire VStack closer to the bottom
+                //                VStack {
+                //                    Spacer() // This spacer pushes the HStack down
+                //                    HStack {
+                //                        Spacer()
+                //                        NavBarButton(iconName: "house.fill", buttonText: "Home")
+                //                            .padding(.vertical) // Add padding at the top and bottom
+                //                        Spacer()
+                //                        NavigationLink(destination: NewsFeedView()) {
+                //                            NavBarButton(iconName: "newspaper.fill", buttonText: "News Feed")
+                //                                .padding(.vertical) // Add padding at the top and bottom
+                //                        }
+                //                        Spacer()
+                //                        NavigationLink(destination: AnnouncementsView()) {
+                //                            NavBarButton(iconName: "megaphone.fill", buttonText: "Announcements")
+                //                                .padding(.vertical) // Add padding at the top and bottom
+                //                        }
+                //                        Spacer()
+                //                        NavigationLink(destination: ProfileView()) {
+                //                            NavBarButton(iconName: "person.crop.circle", buttonText: "Profile")
+                //                                .padding(.vertical) // Add padding at the top and bottom
+                //                        }
+                //                        Spacer()
+                //                    }
+                //                    .padding(.horizontal) // Add equal padding on each side
+                //                    .background(
+                //                        LinearGradient(
+                //                            gradient: Gradient(colors: [Color(hex: "#000000"), Color(hex: "#F5F5F")]),
+                //                            //                                Color(hex: "#575757")]),
+                //                            startPoint: .leading,
+                //                            endPoint: .trailing
+                //                        )
+                //                    )
+                //                    .cornerRadius(35) // Apply border radius
+                //                    .foregroundColor(.white) // Set text and image color to white
+                //                    .padding(.horizontal)
+                //                    .padding(.bottom, -40) // Bring the HStack closer to the bottom
+                //                }
+                //                .padding(.bottom, 20) // Bring the entire VStack closer to the bottom
                 .sheet(isPresented: $isBellModalVisible) {
                     BellModalView()
                         .presentationDetents([.fraction(0.9)]) // Open modal to half screen
