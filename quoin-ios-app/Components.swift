@@ -32,7 +32,7 @@ struct Loading: View {
                 ProgressView(message)
                     .padding()
             } else {
-                ProgressView("Fetching data...")
+                ProgressView("")
                     .padding()
             }
         } else {
@@ -736,7 +736,7 @@ struct AnnouncementCardView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(maxWidth: .infinity)
                     .clipShape(RoundedRectangle(cornerRadius: 10)) // Add border radius
-                    .shadow(radius: 10)
+//                    .shadow(radius: 10)
             }
             .padding()
             .padding(.top, 10)

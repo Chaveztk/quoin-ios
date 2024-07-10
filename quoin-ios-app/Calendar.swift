@@ -6,7 +6,7 @@ struct CalendarBookingView: View {
    @State private var selectedDate: Date? = nil
    
    @State private var bookings: [Date: [Event]] = [
-       Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 7))!: [
+       Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 10))!: [
            Event(title: "Doctor appointment, friends and family", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
            Event(title: "Doctor appointment, friends and family", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
            Event(title: "Doctor appointment, friends and family", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!)
@@ -30,6 +30,7 @@ struct CalendarBookingView: View {
                
 //                                LinearGradient(gradient: Gradient(colors: [Color(hex: "#F5F5F7"), Color(hex: "#F5F5F7")]), startPoint: .leading, endPoint: .bottom) // Shades of gray background
 //                                    .edgesIgnoringSafeArea(.all)
+               
                VStack {
                    VStack {
                        HStack {
@@ -77,9 +78,7 @@ struct CalendarBookingView: View {
 //                           .background(Color(UIColor.white))
 //                           .cornerRadius(25)
 //                           .shadow(radius: 5)
-//                       
-                       
-
+                    
                        Card {
                            HStack {
                                // Profile Holder (Circle)
@@ -133,6 +132,13 @@ struct CalendarBookingView: View {
                        .padding(.horizontal) // Add padding for centering
                        
                    }
+                   
+                   HorizontalCalendarView(currentMonth: $currentMonth, bookings: $bookings, onSelectDate: { date in
+                       self.selectedDate = date
+                   })
+                   .padding(.bottom, 10)
+                   .padding(.top, 20)
+                   .fontWeight(.bold)
                    
                    //                    KeyButtons(Button1: "Maintenance", Button2: "Inspections", Button3: "Contractors")
                    
@@ -382,6 +388,96 @@ struct CalendarCellView: View {
        .padding(.vertical, 0)
    }
 }
+
+
+struct HorizontalCalendarView: View {
+    @Binding var currentMonth: Date
+    @Binding var bookings: [Date: [Event]]
+    @State private var selectedDate: Date? = nil
+    var onSelectDate: ((Date) -> Void)?
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        return formatter
+    }()
+    
+    private var monthsFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }
+    
+    private var daysInMonth: [Date] {
+        guard let range = Calendar.current.range(of: .day, in: .month, for: currentMonth) else { return [] }
+        let startOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: currentMonth))!
+        return range.compactMap { Calendar.current.date(byAdding: .day, value: $0 - 1, to: startOfMonth) }
+    }
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Button(action: {
+                    self.currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: self.currentMonth)!
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                }
+                
+                Text(monthsFormatter.string(from: currentMonth))
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                Button(action: {
+                    self.currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.currentMonth)!
+                }) {
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                }
+            }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(daysInMonth, id: \.self) { date in
+                        VStack {
+                            Text(dateFormatter.string(from: date))
+                                .frame(width: 40, height: 60)
+                                .background(self.isSelectedDate(date) ? Color.blue : Color.clear)
+                                .foregroundColor(self.isSelectedDate(date) ? Color.white : Color.white)
+                                .onTapGesture {
+                                    selectedDate = date
+                                    onSelectDate?(date)
+                                }
+                                .background(Color(hex: "#3B3B3B"))
+                                .cornerRadius(20)
+                            
+                            // Display side-by-side dots for multiple events
+                            if let events = bookings[date] {
+                                HStack(spacing: 5) {
+                                    ForEach(events.indices, id: \.self) { index in
+                                        Circle()
+                                            .fill(events[index].color)
+                                            .frame(width: 5, height: 5)
+                                            .padding(.top, -5)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+    
+    private func isSelectedDate(_ date: Date) -> Bool {
+        return selectedDate != nil && Calendar.current.isDate(date, equalTo: selectedDate!, toGranularity: .day)
+    }
+}
+
 
 
 

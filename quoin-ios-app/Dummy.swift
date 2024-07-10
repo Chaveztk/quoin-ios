@@ -1,157 +1,188 @@
-   
-
-
-
-
 import SwiftUI
 
-struct Dummy: View {
+
+struct DummyView: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
+    
+    
     var body: some View {
-        VStack {
-            
+        NavigationStack {
+            ZStack {
+                Background()
+                
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading) {
+                        
+//                        VStack {
+//                            Text("Robinscroft Mews")
+//                                .font(.headline)
+//                                .multilineTextAlignment(.center)
+//                                .padding(.horizontal)
+//                                .fontWeight(.bold)
+//
+//                            
+//                            Text("Annual General Meeting")
+//                                .font(.subheadline)
+//                                .multilineTextAlignment(.center)
+//                                .padding(.horizontal)
+//                                .fontWeight(.bold)
+//                                .foregroundColor(.gray)
+//
+//                        }
+//                        .frame(maxWidth: .infinity, alignment: .center)
+                        
+                        HStack(alignment: .top, spacing: 120) {
+                            VStack(spacing: 20) {
+                                PropertyDetails(imageName: "calendar", text: "Wed, Aug 14")
+                                PropertyDetails(imageName: "location", text: "Pub")
+                            }
+                            .fontWeight(.bold)
+
+                            
+                            VStack(spacing: 20) {
+                                PropertyDetails(imageName: "clock", text: "10:00")
+                                PropertyDetails(imageName: "textformat", text: "Meeting")
+                            }
+                            .fontWeight(.bold)
+
+                        }
+                        .padding(.top, 60)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+
+                        
+                        // Attendees Section
+                        VStack(alignment: .leading) {
+                            Text("Attendees")
+                                .font(.headline)
+                                .padding(.bottom, 10)
+                                .fontWeight(.bold)
+
+                            
+                            HStack(spacing: 10) {
+                                ForEach(0..<5) { index in
+                                    Image("joe")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .cornerRadius(100) // Apply corner radius to the ZStack
+                                        .frame(width: 35, height: 35)
+                                        .clipShape(Circle())
+                                        .padding(.trailing, -20) // Added padding to the right
+                                    
+                                }
+                                ZStack {
+                                    Circle()
+                                        .foregroundColor(Color.gray.opacity(0.7)) // Apply opacity to gray color
+                                        .frame(width: 40, height: 40)
+                                    
+                                    Text("+5")
+                                        .foregroundColor(.white)
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
+                                }
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.trailing, -20)
+                                
+                            }
+                            .padding(.bottom, 20)
+
+
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 20)
+                        
+                        // Description Section
+                        VStack(alignment: .leading) {
+                            Text("Description")
+                                .font(.headline)
+                                .padding(.bottom, 5)
+                                .fontWeight(.bold)
+
+                            
+                            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet dapibus velit, in malesuada velit.")
+                                .padding(.bottom, 10)
+
+                        }
+                        
+                        .padding(.horizontal)
+                        
+                        // Image Section
+                        Image("meeting")
+                            .resizable()
+                            .frame(maxWidth: .infinity, maxHeight: 170)
+                            .foregroundColor(.black)
+                            .cornerRadius(10)
+                            .padding()
+                        
+                        
+                        
+                        
+                        VStack(alignment: .leading) {
+                            Text("Address")
+                                .font(.headline)
+                                .padding(.bottom, 5)
+                                .fontWeight(.bold)
+
+                            
+                            Text("Robinscrot Mews SE10 8DN")
+                        }
+                        
+                        .padding(.horizontal)
+                    }
+                }
+            }
+//            .navigationBarTitle("Dummy View") // Example navigation bar title
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    HStack {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black) // Customize the color if needed
+                                .fontWeight(.bold)
+                        }
+                    }
+                }
+                
+                
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    
+                    VStack {
+                        Text("Robinscroft Mews")
+                            .font(.headline)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                            .fontWeight(.bold)
+
+                        
+                        Text("Annual General Meeting")
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray)
+
+                    }
+                    .padding(.leading, 45)
+                    .frame(maxWidth: .infinity, alignment: .center)
+
+                    
+                }
+                
+            }
         }
     }
 }
 
 
 
-
-
-
-
-
-
-#Preview {
-    Dummy()
+struct Dummy_Previews: PreviewProvider {
+    static var previews: some View {
+        DummyView()
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// calendar widget
-
-
-
-//
-//import SwiftUI
-//
-//struct CalendarBookingView: View {
-//    var body: some View {
-//        VStack {
-//            WidgetCard()
-//                .frame(width: 170, height: 150)
-//                .background(Color(UIColor.white))
-//                .cornerRadius(25)
-//                .shadow(radius: 5)
-//        }
-//    }
-//}
-//
-//struct WidgetCard: View {
-//    @State private var currentDate: Date = Date()
-//    @State private var bookings: [Date: [Event]] = [
-//        Calendar.current.startOfDay(for: Date()): [
-//            Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.startOfDay(for: Date())),
-//            Event(title: "Lunch with colleagues", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.startOfDay(for: Date())),
-//            Event(title: "Dinner with friends", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.startOfDay(for: Date()))
-//        ]
-//    ]
-//
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            HStack(alignment: .top) {
-//                VStack {
-//                    Text(DateFormatter().shortWeekdaySymbols[Calendar.current.component(.weekday, from: currentDate) - 1])
-//                        .font(.headline)
-//                        .fontWeight(.bold)
-//                    Text("\(Calendar.current.component(.day, from: currentDate))")
-//                        .font(.body)
-//                        .fontWeight(.bold)
-//                }
-//                Spacer()
-//                VStack(alignment: .leading) {
-//                    Text("\(bookings[Calendar.current.startOfDay(for: currentDate)]?.count ?? 0)")
-//                        .font(.title3)
-//                        .fontWeight(.bold)
-//                    Text("Today event")
-//                        .font(.caption)
-//                }
-//            }
-//            Spacer()
-//            if let events = bookings[Calendar.current.startOfDay(for: currentDate)] {
-//                CarouselView(events: events)
-//            } else {
-//                Text("No events")
-//                    .font(.caption)
-//                    .foregroundColor(.gray)
-//            }
-//        }
-//        .padding()
-//    }
-//}
-//
-//struct CarouselView: View {
-//    var events: [Event]
-//
-//    var body: some View {
-//        ScrollView(.vertical) {
-//            VStack {
-//                ForEach(events, id: \.self) { event in
-//                    EventRowView(event: event)
-//                        .background(Color(hex: "#F5F5F7")) // Background color of the circle
-//                        .cornerRadius(5)
-//                        .padding(2)
-//                }
-//            }
-//        }
-//        .frame(height: 60)
-//    }
-//}
-//
-//struct EventRowView: View {
-//    let event: Event
-//
-//    var body: some View {
-//        HStack {
-//            Rectangle()
-//                .fill(event.color)
-//                .frame(width: 5)
-//            VStack(alignment: .leading) {
-//                Text(event.title)
-//                    .font(.caption)
-//                    .fontWeight(.bold)
-//                Text(event.time)
-//                    .font(.caption2)
-//            }
-//            Spacer() // Add a spacer to push content to the left
-//        }
-//        .padding(5)
-//        .frame(maxWidth: .infinity) // Take up the available width
-//    }
-//}
-//
-//struct Event: Identifiable, Hashable {
-//    let id = UUID()
-//    var title: String
-//    var time: String
-//    var color: Color
-//    var date: Date
-//}
-//
-//struct CalendarBookingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CalendarBookingView()
-//    }
-//}
-
-

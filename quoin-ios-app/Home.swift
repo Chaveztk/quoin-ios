@@ -20,7 +20,7 @@ struct HomeView: View {
     @State private var selectedTab = 0 // State for selected tab
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 7))!: [
+        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 10))!: [
             Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Dentis appointment", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Apple appointment", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!)
@@ -134,22 +134,6 @@ struct HomeView: View {
                             
                             VStack {
                                 
-                                
-                                //                                HStack(spacing: 20) {
-                                //                                    //                                    WidgetCard(bookings: $bookings)
-                                //                                    WidgetCard()
-                                //                                        .frame(width: 170, height: 150)
-                                //                                        .background(Color(UIColor.white))
-                                //                                        .cornerRadius(25)
-                                //                                        .shadow(radius: 5)
-                                //                                    //                                    WidgetCard(bookings: $bookings)
-                                //                                    WidgetCard()
-                                //                                        .frame(width: 170, height: 150)
-                                //                                        .background(Color(UIColor.white))
-                                //                                        .cornerRadius(25)
-                                //                                        .shadow(radius: 5)
-                                //                                }
-                                
                                 HStack {
                                     Text("Today's Event")
                                         .font(.headline)
@@ -159,21 +143,44 @@ struct HomeView: View {
                                         .padding(.leading)
                                     
                                     Spacer()
-                                    
-                                    //                                    Button(action: {
-                                    //                                        // Add action for View All button
-                                    //                                    }) {
-                                    //                                        Text("View all")
-                                    //                                            .font(.subheadline)
-                                    //                                            .foregroundColor(.blue)
-                                    //                                            .fontWeight(.bold)
-                                    //                                            .padding(.top, 10)
-                                    //                                            .padding(.bottom, -20)
-                                    //                                            .padding(.trailing, 20) // Added padding to the right
-                                    //                                    }
                                 }
                                 .padding(.bottom, 30)
                                 .padding(.top, 10)
+                                HStack(spacing: 20) {
+                                    //                                    WidgetCard(bookings: $bookings)
+                                    WidgetCard(bookings: $bookings)
+                                        .frame(width: 170, height: 150)
+                                        .background(Color(UIColor.white))
+                                        .cornerRadius(25)
+//                                        .shadow(radius: 5)
+                                    WidgetCard(bookings: $bookings)
+                                        .frame(width: 170, height: 150)
+                                        .background(Color(UIColor.white))
+                                        .cornerRadius(25)
+//                                        .shadow(radius: 5)
+                               
+//                                    ZStack {
+//                                        // Background image
+//                                        Image("Mews")
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fill)
+//                                            .frame(width: 170, height: 150)
+//                                            .cornerRadius(25)
+//                                            .shadow(radius: 5)
+//                                        
+//                                        // Text overlay
+//                                        Text("My Estate")
+//                                            .foregroundColor(.black) // Customize text color as needed
+//                                            .font(.headline) // Adjust font size and style
+//                                            .frame(width: 170, height: 150)
+//                                            .background(Color.white.opacity(0.3)) // Semi-transparent white background
+//                                            .cornerRadius(25)
+//                                            .shadow(radius: 5)
+//                                    }
+
+                                }
+                                
+
                                 //                                HStack(spacing: 20) {
                                 //                                    WidgetCard(bookings: $bookings)
                                 //                                        .frame(width: 170, height: 150)
@@ -477,7 +484,9 @@ struct HomeView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        NavBarButton(iconName: "house.fill", buttonText: "Home")
+                        NavigationLink(destination: DummyView()) {
+                            NavBarButton(iconName: "house.fill", buttonText: "Home")
+                        }
                         Spacer()
                         NavigationLink(destination: AnnouncementsView()) {
                             NavBarButton(iconName: "megaphone.fill", buttonText: "Announcements")

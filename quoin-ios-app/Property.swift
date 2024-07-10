@@ -622,6 +622,8 @@ struct PropertyDetails: View {
                     .frame(width: 20, height: 20) // Size of the images
                 Text(text)
                 //                .font(caption)
+                    .foregroundColor(.gray)
+
                     .bold()
             }
         }
