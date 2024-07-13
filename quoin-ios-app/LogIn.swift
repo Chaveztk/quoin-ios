@@ -8,22 +8,23 @@
 import SwiftUI
 import Foundation
 import WebKit
+import LocalAuthentication
 
 struct LogInView: View {
-    @State private var email: String = ""
     @State private var password: String = ""
     @State private var isLoggedIn: Bool = false
+    @State private var credentialsFound: Bool = false
     @State private var isLoading: Bool = false
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
-    @State private var isAdmin: Bool = false
-    @State private var isLandlord: Bool = false
-    @State private var isTenant: Bool = false
-    @State private var isDirector: Bool = false
-    @State private var username: String = ""
     @State private var rememberMe: Bool = false
+    @AppStorage("username") private var username: String = ""
+    @AppStorage("isFaceIDEnabled") private var isFaceIDEnabled: Bool = false
+    @AppStorage("isAdmin") private var isAdmin: Bool = false
+    @AppStorage("isLandlord") private var isLandlord: Bool = false
+    @AppStorage("isTenant") private var isTenant: Bool = false
+    @AppStorage("isDirector") private var isDirector: Bool = false
 
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -56,7 +57,7 @@ struct LogInView: View {
                         Image(systemName: "envelope")
                             .foregroundColor(.gray)
                             .padding(.leading, 10) // Add leading padding to the icon
-                        TextField("Email", text: $email)
+                        TextField("Email", text: $username)
                             .textFieldStyle(DefaultTextFieldStyle())
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
@@ -89,11 +90,17 @@ struct LogInView: View {
                 }
 
                 HStack {
-                    Toggle(isOn: $rememberMe) {
-                        Text("Remember me?")
+                    Toggle(isOn: $isFaceIDEnabled) {
+                        Text("Enable Face ID?")
                             .font(.body)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
+                            .onChange(of: isFaceIDEnabled) { oldValue, newValue in
+                                isFaceIDEnabled = newValue
+                                Task {
+                                    await doLogin()
+                                }
+                            }
                     }
                     .padding(.horizontal)
 
@@ -102,7 +109,9 @@ struct LogInView: View {
 
                 Button(
                     action: {
-                        Task.init(operation: { await doLogin() })
+                        Task {
+                            await doLogin()
+                        }
                     }
                 ) {
                     Text("Log In")
@@ -136,11 +145,6 @@ struct LogInView: View {
                 
                 .navigationDestination(isPresented: $isLoggedIn) {
                     HomeView(
-                        isAdmin: isAdmin,
-                        isTenant: isTenant,
-                        isLandlord: isLandlord,
-                        isDirector: isDirector,
-                        username: username
                     )
                 }
             }
@@ -160,29 +164,49 @@ struct LogInView: View {
             }
         }
         .onAppear {
-            do {
-                try searchCredentials()
-            } catch {
-                self.email = ""
-                self.password = ""
+            Task {
+                do {
+                    try (credentialsFound, username, password) = searchCredentials()
+                    isFaceIDEnabled = isFaceIDAvailable()
+                    print(isFaceIDEnabled)
+                    if credentialsFound == true && isFaceIDEnabled == true {
+                        await doLogin()
+                    }
+                } catch {
+                    self.username = ""
+                    self.password = ""
+                }
             }
         }
     }
-    
+        
     func doLogin() async {
         isLoading = true
         do {
-            let response = try await logIn(email: email, password: password)
+            let response = try await logIn(email: username, password: password)
             self.isAdmin = response.isAdmin
             self.isDirector = response.isDirector
             self.isLandlord = response.isLandlord
             self.isTenant = response.isTenant
-            self.username = response.username
-            self.isLoggedIn = true
             do {
-                try saveCredentials(email: email, password: password)
+                try saveCredentials(username: username, password: password)
             } catch {
                 return
+            }
+            if isFaceIDEnabled == true {
+                authenticateWithFaceID { isSuccess in
+                    if isSuccess {
+                        isLoggedIn = true
+                        isLoading = false
+                    } else {
+                        isLoggedIn = false
+                        isLoading = false
+                        alertMessage = "Face ID authentication failed."
+                        showAlert = true
+                    }
+                }
+            } else {
+                self.isLoggedIn = true
             }
             self.isLoading = false
         } catch {
@@ -192,51 +216,6 @@ struct LogInView: View {
             self.alertMessage = "You have given the wrong credential details: wrong username or password."
         }
     }
-    
-    func saveCredentials(email: String, password: String) throws {
-        if self.rememberMe == true {
-            let passwordData = password.data(using: String.Encoding.utf8)!
-            let query: [String: Any] = [
-                kSecClass as String: kSecClassInternetPassword,
-                kSecAttrServer as String: "quoinmanagement.com",
-                kSecAttrAccount as String: email,
-                kSecValueData as String: passwordData
-            ]
-            let status = SecItemAdd(query as CFDictionary, nil)
-            guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status)}
-        }
-    }
-    
-    func searchCredentials() throws {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassInternetPassword,
-            kSecAttrServer as String: "quoinmanagement.com",
-            kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecReturnAttributes as String: true,
-            kSecReturnData as String: true
-        ]
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status != errSecItemNotFound else { throw KeychainError.noPassword }
-        guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
-        guard let existingItem = item as? [String: Any],
-              let passwordData = existingItem[kSecValueData as String] as? Data,
-              let passwordResult = String(data: passwordData, encoding: String.Encoding.utf8),
-              let account = existingItem[kSecAttrAccount as String] as? String
-        else {
-            throw KeychainError.unexpectedPasswordData
-        }
-        self.email = account
-        self.password = passwordResult
-        self.rememberMe = true
-    }
-    
-}
-
-enum KeychainError: Error {
-    case noPassword
-    case unexpectedPasswordData
-    case unhandledError(status: OSStatus)
 }
 
 #Preview {
