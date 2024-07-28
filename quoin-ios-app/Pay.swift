@@ -31,7 +31,7 @@ struct PayView: View {
             }
             .padding()
             .alert(isPresented: $showAlert) {
-                Alert(title: Text("Stripe Token"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                Alert(title: Text("Payment"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
         }
         .padding()
@@ -48,7 +48,6 @@ struct PayView: View {
             }
             cardParams.cvc = mCard.cvc
             isLoading = false
-            alertMessage = "Payment"
             STPAPIClient.shared.createToken(withCard: cardParams) { (token, error) in
                 if let token = token {
                     tokenStripe = token.tokenId

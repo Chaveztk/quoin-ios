@@ -87,6 +87,9 @@ struct StripeRequest: PostData {
 }
 
 struct StripeResult: Codable {
+    let stripe_token: String
+    let user: Int
+    let payment_due: String
     let status_code: Int
     let error: String
 }
