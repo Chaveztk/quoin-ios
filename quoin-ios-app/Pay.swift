@@ -1,157 +1,74 @@
-//
-//  Pay.swift
-//  quoin-ios-app
-//
-//  Created by Chavez King on 28/07/2024.
-//
-
-import Foundation
 import SwiftUI
 import Stripe
 
 struct PayView: View {
-    @State private var cardParams = STPPaymentMethodCardParams()
-    @State private var isProcessing = false
-    @State private var errorMessage: String?
+    @State var paymentId: String
+    @State private var paymentMethodParams: STPPaymentMethodParams?
+    @State private var isLoading: Bool = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var tokenStripe: String = ""
+    @AppStorage("userId") private var userId: Int = 1
 
     var body: some View {
         VStack {
-            STPPaymentCardTextField.Representable(cardParams: $cardParams)
+            Loading(isLoading: $isLoading)
+            STPPaymentCardTextField.Representable(paymentMethodParams: $paymentMethodParams)
                 .padding()
-
-            if let errorMessage = errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
-
-            Button(action: processPayment) {
-                Text(isProcessing ? "Processing..." : "Pay Now")
-                    .padding()
-                    .background(Color.blue)
+            
+            Button(action: {
+                Task {
+                    await createToken()
+                }
+            }) {
+                Text("Get Token")
+                    .font(.headline)
                     .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(10)
             }
-            .disabled(isProcessing)
             .padding()
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Stripe Token"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
         }
         .padding()
     }
 
-    func processPayment() {
-        isProcessing = true
-        errorMessage = nil
-
-        let paymentMethodCardParams = STPPaymentMethodCardParams()
-        paymentMethodCardParams.number = cardParams.number
-        paymentMethodCardParams.expMonth = cardParams.expMonth
-        paymentMethodCardParams.expYear = cardParams.expYear
-        paymentMethodCardParams.cvc = cardParams.cvc
-
-        let billingDetails = STPPaymentMethodBillingDetails()
-        let paymentMethodParams = STPPaymentMethodParams(card: paymentMethodCardParams, billingDetails: billingDetails, metadata: nil)
-
-        STPAPIClient.shared.createPaymentMethod(with: paymentMethodParams) { paymentMethod, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isProcessing = false
-                }
-                return
+    func createToken() async {
+        isLoading = true
+        let cardParams: STPCardParams = STPCardParams()
+        if let payMethod = paymentMethodParams, let mCard = payMethod.card {
+            cardParams.number = mCard.number
+            if let cardExpMonth = mCard.expMonth, let cardExpYear = mCard.expYear {
+                cardParams.expMonth = cardExpMonth.uintValue
+                cardParams.expYear = cardExpYear.uintValue
             }
-
-            guard let paymentMethod = paymentMethod else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Failed to create Payment Method"
-                    self.isProcessing = false
-                }
-                return
-            }
-
-            let paymentData: [String: Any] = [
-                "payment_method": paymentMethod.stripeId,
-                "amount": 5000,  // Example amount in cents
-                "currency": "usd"
-            ]
-
-            guard let url = URL(string: "/api/process-payment/") else { return }
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("{{ csrf_token }}", forHTTPHeaderField: "X-CSRFToken")
-
-            do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: paymentData, options: [])
-            } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Failed to serialize payment data"
-                    self.isProcessing = false
-                }
-                return
-            }
-
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                DispatchQueue.main.async {
-                    self.isProcessing = false
-
-                    guard let data = data, error == nil else {
-                        self.errorMessage = error?.localizedDescription ?? "Unknown error"
-                        return
-                    }
-
-                    do {
-                        if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                            print("Payment response: \(jsonResponse)")
-                        } else {
-                            self.errorMessage = "Invalid response data"
+            cardParams.cvc = mCard.cvc
+            isLoading = false
+            alertMessage = "Payment"
+            STPAPIClient.shared.createToken(withCard: cardParams) { (token, error) in
+                if let token = token {
+                    tokenStripe = token.tokenId
+                    print(tokenStripe)
+                    Task {
+                        do {
+                            let resultPay = try await makePayment(userId: userId, stripeToken: tokenStripe, paymentDue: paymentId)
+                            alertMessage = "Payment Successful. You will receive a receipt to your registered email."
+                        } catch {
+                            alertMessage = "Payment failed: \(error.localizedDescription)"
                         }
-                    } catch {
-                        self.errorMessage = "Failed to parse response data"
                     }
+                    showAlert = true
                 }
-            }
-            task.resume()
-        }
-    }
-}
-
-struct Payment_Previews: PreviewProvider {
-    static var previews: some View {
-        PayView()
-    }
-}
-
-extension STPPaymentCardTextField {
-    struct Representable: UIViewRepresentable {
-        @Binding var cardParams: STPPaymentMethodCardParams
-
-        func makeUIView(context: Context) -> STPPaymentCardTextField {
-            let cardTextField = STPPaymentCardTextField()
-            cardTextField.delegate = context.coordinator
-            return cardTextField
-        }
-
-        func updateUIView(_ uiView: STPPaymentCardTextField, context: Context) {
-            // No need to update the view here
-        }
-
-        func makeCoordinator() -> Coordinator {
-            Coordinator(cardParams: $cardParams)
-        }
-
-        class Coordinator: NSObject, STPPaymentCardTextFieldDelegate {
-            @Binding var cardParams: STPPaymentMethodCardParams
-
-            init(cardParams: Binding<STPPaymentMethodCardParams>) {
-                _cardParams = cardParams
-            }
-
-            func paymentCardTextFieldDidChange(_ textField: STPPaymentCardTextField) {
-                cardParams.number = textField.cardParams.number
-                cardParams.expMonth = textField.cardParams.expMonth! as NSNumber
-                cardParams.expYear = textField.cardParams.expYear! as NSNumber
-                cardParams.cvc = textField.cardParams.cvc
+                isLoading = false
             }
         }
     }
 }
+
+
+
+

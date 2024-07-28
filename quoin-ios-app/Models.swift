@@ -72,9 +72,21 @@ struct LogInRequest: PostData {
 
 struct LogInData: CodableWithPK {
     var pk: URL { return URL(string:"")! }
+    let id: Int
     let isAdmin: Bool
     let isDirector: Bool
     let isTenant: Bool
     let isLandlord: Bool
     let username: String
+}
+
+struct StripeRequest: PostData {
+    let user: Int
+    let payment_due: String
+    let stripe_token: String
+}
+
+struct StripeResult: Codable {
+    let status_code: Int
+    let error: String
 }

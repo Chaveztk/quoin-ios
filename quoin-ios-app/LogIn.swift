@@ -19,6 +19,7 @@ struct LogInView: View {
     @State private var alertMessage: String = ""
     @State private var rememberMe: Bool = false
     @AppStorage("username") private var username: String = ""
+    @AppStorage("userId") private var userId: Int = 1
     @AppStorage("isFaceIDEnabled") private var isFaceIDEnabled: Bool = false
     @AppStorage("isAdmin") private var isAdmin: Bool = false
     @AppStorage("isLandlord") private var isLandlord: Bool = false
@@ -184,6 +185,7 @@ struct LogInView: View {
         isLoading = true
         do {
             let response = try await logIn(email: username, password: password)
+            self.userId = response.id
             self.isAdmin = response.isAdmin
             self.isDirector = response.isDirector
             self.isLandlord = response.isLandlord

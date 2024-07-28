@@ -66,6 +66,15 @@ func logIn(email: String, password: String) async throws -> LogInData {
     return try JSONDecoder().decode(LogInData.self, from: data)
 }
 
+func makePayment(userId: Int, stripeToken: String, paymentDue: String) async throws -> StripeResult {
+    let stripeData = StripeRequest(user: userId, payment_due: paymentDue, stripe_token: stripeToken)
+    let url = URL(string: "http://me-quoin-management.us-east-1.elasticbeanstalk.com/api/pay/")!
+    let (data, response) = try await makePostRequest(url: url, method: "POST", jsonData: stripeData)
+    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else { throw NetworkError.invalidResponse }
+    return try JSONDecoder().decode(StripeResult.self, from: data)
+}
+
+
 enum NetworkError: Error {
     case invalidResponse
 }

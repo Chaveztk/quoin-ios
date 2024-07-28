@@ -294,7 +294,7 @@ struct ProgressbarCardView: View {
                 }
                 .padding(.bottom, 0)
                 
-                NavigationLink(destination: PaymentView()) {
+                NavigationLink(destination: PayView(paymentId: "cb2b43fd-7180-4e41-9251-c976253a28ec")) {
                     HStack {
 //                        Image(systemName: "creditcard") // Payment icon
 //                            .foregroundColor(.white)
