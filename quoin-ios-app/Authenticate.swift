@@ -121,7 +121,8 @@ struct LoginView: View {
                     .padding(.bottom, 100) // Add padding to create space above the fields
 
             }
-
+            Spacer() // Push the login fields to the bottom
+            
             VStack {
                 
                 Loading(isLoading: $isLoading, messageLoading: "Logging you in...")

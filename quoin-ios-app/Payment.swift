@@ -199,8 +199,8 @@ struct PaymentView: View {
                         }
                         
                         .padding(.horizontal)
-                        
-                        Button(action: { }) {
+                        NavigationLink(destination: PayView(paymentId: "cb2b43fd-7180-4e41-9251-c976253a28ec")) {
+//                        Button(action: { }) {
                             HStack {
                                 Image(systemName: "creditcard") // Payment icon
                                     .foregroundColor(.white)
