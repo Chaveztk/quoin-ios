@@ -20,7 +20,7 @@ struct HomeView: View {
     @State private var selectedTab = 0 // State for selected tab
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 10))!: [
+        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 29))!: [
             Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Dentis appointment", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Apple appointment", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!)
@@ -81,14 +81,14 @@ struct HomeView: View {
                                 
                                 Spacer()
                                 
-                                //                            Profile Icon
-                                //                            NavigationLink(destination: UpcomingView()) {
-                                //
-                                //                                Image(systemName: "line.horizontal.3")
-                                //                                    .font(.title)
-                                //                                    .foregroundColor(.black)
-                                //                            }
-                                //                            .padding(.trailing, 3)
+//                                Profile Icon
+//                                NavigationLink(destination: UpcomingView()) {
+//
+//                                    Image(systemName: "line.horizontal.3")
+//                                        .font(.title)
+//                                        .foregroundColor(.black)
+//                                }
+//                                .padding(.trailing, 3)
                                 //
                                 Button(action: {
                                     isBellModalVisible.toggle() // Toggle bell modal visibility
@@ -149,57 +149,64 @@ struct HomeView: View {
                                     .padding(.bottom, 30)
                                     .padding(.top, 10)
                                     HStack(spacing: 20) {
-                                        //                                    WidgetCard(bookings: $bookings)
-                                        WidgetCard(bookings: $bookings)
-                                            .frame(width: 170, height: 150)
-                                            .background(Color(UIColor.white))
-                                            .cornerRadius(25)
-                                        //                                        .shadow(radius: 5)
-                                        WidgetCard(bookings: $bookings)
-                                            .frame(width: 170, height: 150)
-                                            .background(Color(UIColor.white))
-                                            .cornerRadius(25)
-                                        //                                        .shadow(radius: 5)
                                         
-                                        //                                    ZStack {
-                                        //                                        // Background image
-                                        //                                        Image("Mews")
-                                        //                                            .resizable()
-                                        //                                            .aspectRatio(contentMode: .fill)
-                                        //                                            .frame(width: 170, height: 150)
-                                        //                                            .cornerRadius(25)
-                                        //                                            .shadow(radius: 5)
-                                        //
-                                        //                                        // Text overlay
-                                        //                                        Text("My Estate")
-                                        //                                            .foregroundColor(.black) // Customize text color as needed
-                                        //                                            .font(.headline) // Adjust font size and style
-                                        //                                            .frame(width: 170, height: 150)
-                                        //                                            .background(Color.white.opacity(0.3)) // Semi-transparent white background
-                                        //                                            .cornerRadius(25)
-                                        //                                            .shadow(radius: 5)
-                                        //                                    }
+//                                        WidgetCard(bookings: $bookings)
+//                                            .frame(width: 170, height: 150)
+//                                            .background(Color(UIColor.white))
+//                                            .cornerRadius(25)
+//                                        //                                        .shadow(radius: 5)
+//                                        WidgetCard(bookings: $bookings)
+//                                            .frame(width: 170, height: 150)
+//                                            .background(Color(UIColor.white))
+//                                            .cornerRadius(25)
+                                        
+                                        WidgetCard(bookings: $bookings)
+                                        //                                        .frame(width: 300, height: 150)
+                                            .frame(width: 360, height: 150)
+                                            .background(Color(UIColor.white))
+                                            .cornerRadius(25)
+                                            .shadow(radius: 5)
+//                                            .shadow(radius: 5)
+//
+//                                        ZStack {
+//                                            // Background image
+//                                            Image("Mews")
+//                                                .resizable()
+//                                                .aspectRatio(contentMode: .fill)
+//                                                .frame(width: 170, height: 150)
+//                                                .cornerRadius(25)
+//                                                .shadow(radius: 5)
+//
+//                                            // Text overlay
+//                                            Text("My Estate")
+//                                                .foregroundColor(.black) // Customize text color as needed
+//                                                .font(.headline) // Adjust font size and style
+//                                                .frame(width: 170, height: 150)
+//                                                .background(Color.white.opacity(0.3)) // Semi-transparent white background
+//                                                .cornerRadius(25)
+//                                                .shadow(radius: 5)
+//                                        }
                                         
                                     }
                                     
-                                    
-                                    //                                HStack(spacing: 20) {
-                                    //                                    WidgetCard(bookings: $bookings)
-                                    //                                        .frame(width: 170, height: 150)
-                                    //                                        .background(Color(UIColor.white))
-                                    //                                        .cornerRadius(25)
-                                    //                                        .shadow(radius: 5)
-                                    //                                    WidgetCard(bookings: $bookings)
-                                    //                                        .frame(width: 170, height: 150)
-                                    //                                        .background(Color(UIColor.white))
-                                    //                                        .cornerRadius(25)
-                                    //                                        .shadow(radius: 5)
-                                    //                                }
-                                    //                                .padding(.top, 20)
-                                    //                                .padding(.bottom, 20)
-                                    
-                                    
-                                    //                                HStack {
+//
+//                                    HStack(spacing: 20) {
+//                                        WidgetCard(bookings: $bookings)
+//                                            .frame(width: 170, height: 150)
+//                                            .background(Color(UIColor.white))
+//                                            .cornerRadius(25)
+//                                            .shadow(radius: 5)
+//                                        WidgetCard(bookings: $bookings)
+//                                            .frame(width: 170, height: 150)
+//                                            .background(Color(UIColor.white))
+//                                            .cornerRadius(25)
+//                                            .shadow(radius: 5)
+//                                    }
+//                                    .padding(.top, 20)
+//                                    .padding(.bottom, 20)
+//
+//
+//                                    HStack {
                                     ButtonRow(selectedSection: Binding(
                                         get: { selectedSection ?? "Properties" }, // Default to "Properties" if nil
                                         set: { selectedSection = $0 }
@@ -597,7 +604,7 @@ struct HomeView: View {
                     }
                 }
             }
-                
+            
         }
         .navigationBarHidden(true) // Hide the navigation bar to show the hamburger menu instead
         .commonNavigation(navigationTitle: "Home", showAlert: $showAlert, alertMessage: alertMessage)

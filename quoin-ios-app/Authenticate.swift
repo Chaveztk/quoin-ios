@@ -113,14 +113,16 @@ struct LoginView: View {
                 Text("Welcome")
                     .font(.title)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .padding(.bottom, 10)
+
                     
                 Text("Login to your account")
                     .font(.body )
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .padding()
-                    .padding(.bottom, 100) // Add padding to create space above the fields
 
             }
+            .padding(.top, 30)
+
             Spacer() // Push the login fields to the bottom
             
             VStack {

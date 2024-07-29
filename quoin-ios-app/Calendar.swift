@@ -75,12 +75,12 @@ struct CalendarBookingView: View {
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity) // Ensure VStack takes full width
                         
-                       WidgetCard(bookings: $bookings)
-//                                        .frame(width: 300, height: 150)
-                           .frame(width: 360, height: 150)
-                           .background(Color(UIColor.white))
-                           .cornerRadius(25)
-                           .shadow(radius: 5)
+//                       WidgetCard(bookings: $bookings)
+////                                        .frame(width: 300, height: 150)
+//                           .frame(width: 360, height: 150)
+//                           .background(Color(UIColor.white))
+//                           .cornerRadius(25)
+//                           .shadow(radius: 5)
                         
                         Card {
                             HStack {
@@ -748,6 +748,89 @@ struct EventRowView: View {
 
 
 
+//struct WidgetCard: View {
+//    @Binding var bookings: [Date: [Event]]
+//
+//    private var currentDate: Date {
+//        Date()
+//    }
+//
+//    private var dateFormatter: DateFormatter {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "EEEE, d'\(daySuffix(from: Calendar.current.component(.day, from: currentDate)))'"
+//        return formatter
+//    }
+//
+//    private func daySuffix(from day: Int) -> String {
+//        switch day {
+//        case 1, 21, 31:
+//            return "st"
+//        case 2, 22:
+//            return "nd"
+//        case 3, 23:
+//            return "rd"
+//        default:
+//            return "th"
+//        }
+//    }
+//
+//    var body: some View {
+//        VStack(alignment: .leading) {
+//            HStack {
+//                VStack(alignment: .leading) {
+//                    if let events = bookings[Calendar.current.startOfDay(for: currentDate)] {
+//                        HStack {
+//                            Text(dateFormatter.string(from: currentDate))
+//                                .font(.headline)
+//                                .fontWeight(.bold)
+//                                .padding(.top, 30)
+//                        }
+//                        ScrollView(.vertical, showsIndicators: false) {
+//                            VStack(spacing: 8) {
+//                                ForEach(events.prefix(4), id: \.self) { event in
+//                                    EventRowView(event: event, showImage: false, textColor: .black, titleFontSize: .caption, timeFontSize: .caption2, indicatorShape: .rectangle)
+//                                }
+//                            }
+//                            .padding(.horizontal, -25)
+//                        }
+//                        .frame(height: 130)
+//                    } else {
+//                        Text("No events Today")
+//                            .font(.caption)
+//                            .foregroundColor(.gray)
+//                            .padding()
+//                    }
+//                }
+//
+//                Spacer()
+//
+//                VStack(alignment: .trailing, spacing: 10) {
+//                    VStack(alignment: .trailing) {
+//                        Text("\(bookings[Calendar.current.startOfDay(for: currentDate)]?.count ?? 0)")
+//                            .font(.title3)
+//                            .fontWeight(.bold)
+//                        Text("Today event")
+//                            .font(.caption)
+//                    }
+//                    Spacer()
+//                }
+//            }
+//            .padding(.horizontal)
+//            .padding(.vertical, 10)
+//        }
+//        .padding(.horizontal, 5)
+//        .background(Color.white)
+//        .cornerRadius(30)
+//        .shadow(radius: 5)
+//    }
+//}
+
+
+
+
+
+
+
 struct WidgetCard: View {
     @Binding var bookings: [Date: [Event]]
 
@@ -777,14 +860,13 @@ struct WidgetCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(dateFormatter.string(from: currentDate))
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .padding(.top, 20)
+                    
                     if let events = bookings[Calendar.current.startOfDay(for: currentDate)] {
-                        HStack {
-                            Text(dateFormatter.string(from: currentDate))
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .padding(.top, 30)
-                        }
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack(spacing: 8) {
                                 ForEach(events.prefix(4), id: \.self) { event in
@@ -795,24 +877,22 @@ struct WidgetCard: View {
                         }
                         .frame(height: 130)
                     } else {
-                        Text("No events Today")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .padding()
+                        VStack(alignment: .leading) {
+                            Text("No events Today")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                                .padding()
+                                .fontWeight(.bold)
+//                            Text("Today event")
+//                                .font(.caption)
+                        }
                     }
                 }
-
-                Spacer()
+                .frame(maxWidth: .infinity)
 
                 VStack(alignment: .trailing, spacing: 10) {
-                    VStack(alignment: .trailing) {
-                        Text("\(bookings[Calendar.current.startOfDay(for: currentDate)]?.count ?? 0)")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                        Text("Today event")
-                            .font(.caption)
-                    }
-                    Spacer()
+                    CalendarViews(currentDate: currentDate)
+                        .frame(width: 150, height: 150)  // Adjusted to fit within 150 height
                 }
             }
             .padding(.horizontal)
@@ -825,7 +905,65 @@ struct WidgetCard: View {
     }
 }
 
+struct CalendarViews: View {
+    var currentDate: Date
 
+    private let calendar = Calendar.current
+    private let dateFormatter = DateFormatter()
+
+    init(currentDate: Date) {
+        self.currentDate = currentDate
+        dateFormatter.dateFormat = "d"
+    }
+
+    var body: some View {
+        let month = calendar.component(.month, from: currentDate)
+        let year = calendar.component(.year, from: currentDate)
+        let days = daysInMonth(month: month, year: year)
+        
+        let firstWeekday = calendar.component(.weekday, from: calendar.date(from: DateComponents(year: year, month: month, day: 1))!)
+
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = "MMMM"
+
+        return VStack {
+            Text(monthFormatter.string(from: currentDate))
+                .font(.headline)
+                
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 7), spacing: 10) {
+                // Adjusting to show correct offset before the first day of the month
+                ForEach(0..<firstWeekday-1, id: \.self) { _ in
+                    Text("")
+                        .frame(maxWidth: .infinity)
+                }
+                
+                ForEach(days, id: \.self) { day in
+                    Text("\(day)")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(isToday(day: day) ? Color.blue.opacity(0.3) : Color.clear)
+                        .cornerRadius(5)
+                }
+            }
+        }
+    }
+
+    private func daysInMonth(month: Int, year: Int) -> [Int] {
+        let dateComponents = DateComponents(year: year, month: month)
+        let date = calendar.date(from: dateComponents)!
+        let range = calendar.range(of: .day, in: .month, for: date)!
+        return Array(range)
+    }
+
+    private func isToday(day: Int) -> Bool {
+        let today = calendar.component(.day, from: currentDate)
+        let thisMonth = calendar.component(.month, from: currentDate)
+        let thisYear = calendar.component(.year, from: currentDate)
+        
+        return day == today && thisMonth == calendar.component(.month, from: currentDate) && thisYear == calendar.component(.year, from: currentDate)
+    }
+}
 
 
 
