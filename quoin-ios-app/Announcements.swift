@@ -45,7 +45,7 @@ struct AnnouncementsView: View {
                             //                        .padding(.trailing, 20)
                         }
                         .padding(.horizontal)
-                        .padding(.top, 20)
+                        .padding(.top, 15)
                         .padding(.horizontal)
                         
                         VStack(alignment: .leading) {
@@ -60,7 +60,7 @@ struct AnnouncementsView: View {
                                     
                                 )
                             }
-                        
+                            .padding(.bottom, 85)
                         Spacer()
                         
                         Text("Previous Announcements")

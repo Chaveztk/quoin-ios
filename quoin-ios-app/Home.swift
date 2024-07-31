@@ -20,7 +20,7 @@ struct HomeView: View {
     @State private var selectedTab = 0 // State for selected tab
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 29))!: [
+        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 31))!: [
             Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Dentis appointment", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Apple appointment", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!)
@@ -34,9 +34,9 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 Background()
-                if isLoading {
-                    Loading(isLoading: $isLoading, messageLoading: "Gathering data. Just a sec...")
-                } else {
+//                if isLoading {
+//                    Loading(isLoading: $isLoading, messageLoading: "Gathering data. Just a sec...")
+//                } else {
                     ScrollView(.vertical) {
                         VStack {
                             // Top header with Hamburger Menu and Welcome
@@ -122,7 +122,7 @@ struct HomeView: View {
                                     .lineLimit(3)
                                 }
                             }
-                            .padding(.top, 10)
+                            
                             
                             
                             
@@ -140,14 +140,14 @@ struct HomeView: View {
                                         Text("Today's Event")
                                             .font(.headline)
                                             .fontWeight(.bold)
-                                            .padding(.top, 10)
+//                                            .padding(.top, 10)
                                             .padding(.bottom, -20)
                                             .padding(.leading)
                                         
                                         Spacer()
                                     }
                                     .padding(.bottom, 30)
-                                    .padding(.top, 10)
+//                                    .padding(.top, 10)
                                     HStack(spacing: 20) {
                                         
 //                                        WidgetCard(bookings: $bookings)
@@ -162,7 +162,7 @@ struct HomeView: View {
                                         
                                         WidgetCard(bookings: $bookings)
                                         //                                        .frame(width: 300, height: 150)
-                                            .frame(width: 360, height: 150)
+                                            .frame(width: 360, height: 155)
                                             .background(Color(UIColor.white))
                                             .cornerRadius(25)
                                             .shadow(radius: 5)
@@ -605,7 +605,7 @@ struct HomeView: View {
                 }
             }
             
-        }
+//        }
         .navigationBarHidden(true) // Hide the navigation bar to show the hamburger menu instead
         .commonNavigation(navigationTitle: "Home", showAlert: $showAlert, alertMessage: alertMessage)
     }

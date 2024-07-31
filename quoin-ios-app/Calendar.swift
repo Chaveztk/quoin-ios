@@ -13,6 +13,7 @@ struct CalendarBookingView: View {
             Event(title: "Doctor appointment, friends and family", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
             Event(title: "Doctor appointment, friends and family", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
             Event(title: "Doctor appointment, friends and family", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!)
+            
         ]
     ]
     
@@ -77,7 +78,7 @@ struct CalendarBookingView: View {
                         
 //                       WidgetCard(bookings: $bookings)
 ////                                        .frame(width: 300, height: 150)
-//                           .frame(width: 360, height: 150)
+//                           .frame(width: 360, height: 155)
 //                           .background(Color(UIColor.white))
 //                           .cornerRadius(25)
 //                           .shadow(radius: 5)
@@ -868,9 +869,10 @@ struct WidgetCard: View {
                     
                     if let events = bookings[Calendar.current.startOfDay(for: currentDate)] {
                         ScrollView(.vertical, showsIndicators: false) {
-                            VStack(spacing: 8) {
+                            VStack(spacing: 4) {
                                 ForEach(events.prefix(4), id: \.self) { event in
                                     EventRowView(event: event, showImage: false, textColor: .black, titleFontSize: .caption, timeFontSize: .caption2, indicatorShape: .rectangle)
+                                        .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
                                 }
                             }
                             .padding(.horizontal, -25)
@@ -929,6 +931,7 @@ struct CalendarViews: View {
         return VStack {
             Text(monthFormatter.string(from: currentDate))
                 .font(.headline)
+                .fontWeight(.bold)
                 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 7), spacing: 10) {
                 // Adjusting to show correct offset before the first day of the month

@@ -766,7 +766,7 @@ struct AnnouncementCardView: View {
                 }
                 Spacer()
             }
-            .padding(.top, 10)
+//            .padding(.top, 10)
             .padding(.bottom, 1)
 
             VStack(alignment: .leading) {
@@ -788,7 +788,7 @@ struct AnnouncementCardView: View {
                         .font(.system(size: 20)) // Increased icon size
                         .padding(.trailing, 20) // Added padding to the right
                 }
-                .padding(.bottom, 20)
+                .padding(.bottom, 15)
             }
             .foregroundColor(.black)
         } // Close the VStack
