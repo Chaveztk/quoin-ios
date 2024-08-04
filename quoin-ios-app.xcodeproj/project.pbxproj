@@ -19,7 +19,6 @@
 		15F15DEE2C3A9C8000694094 /* Leftsidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F15DED2C3A9C8000694094 /* Leftsidebar.swift */; };
 		15F15DF02C4282C700694094 /* Authenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F15DEF2C4282C700694094 /* Authenticate.swift */; };
 		15F9DB0A2C14530000250B16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB092C14530000250B16 /* Profile.swift */; };
-		15F9DB0C2C14540E00250B16 /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB0B2C14540E00250B16 /* LogIn.swift */; };
 		15F9DB0E2C1454A500250B16 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB0D2C1454A500250B16 /* Components.swift */; };
 		15F9DB102C14648500250B16 /* TenancyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB0F2C14648500250B16 /* TenancyDetails.swift */; };
 		15F9DB122C1467E700250B16 /* Documents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9DB112C1467E700250B16 /* Documents.swift */; };
@@ -61,7 +60,6 @@
 		15F15DED2C3A9C8000694094 /* Leftsidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leftsidebar.swift; sourceTree = "<group>"; };
 		15F15DEF2C4282C700694094 /* Authenticate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticate.swift; sourceTree = "<group>"; };
 		15F9DB092C14530000250B16 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		15F9DB0B2C14540E00250B16 /* LogIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
 		15F9DB0D2C1454A500250B16 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		15F9DB0F2C14648500250B16 /* TenancyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenancyDetails.swift; sourceTree = "<group>"; };
 		15F9DB112C1467E700250B16 /* Documents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Documents.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 				15F9DB432C1ECBB300250B16 /* PaymentMethod.swift */,
 				15F9DB172C14757500250B16 /* Upcoming.swift */,
 				15F9DB092C14530000250B16 /* Profile.swift */,
-				15F9DB0B2C14540E00250B16 /* LogIn.swift */,
 				15F9DB0D2C1454A500250B16 /* Components.swift */,
 				15F9DB192C14767F00250B16 /* Memberlog.swift */,
 				15F9DB452C209DFA00250B16 /* AnnouncementsLog.swift */,
@@ -327,7 +324,6 @@
 				15F9DB202C14F95500250B16 /* MaintenanceLandlord.swift in Sources */,
 				15F9DB0A2C14530000250B16 /* Profile.swift in Sources */,
 				15F9DB3A2C1A2C7E00250B16 /* SideMenuOptionModal.swift in Sources */,
-				15F9DB0C2C14540E00250B16 /* LogIn.swift in Sources */,
 				15EF81092C0B237800E49249 /* quoin_ios_appApp.swift in Sources */,
 				15A6F94D2C5650A3004DA525 /* Pay.swift in Sources */,
 				15F9DB102C14648500250B16 /* TenancyDetails.swift in Sources */,

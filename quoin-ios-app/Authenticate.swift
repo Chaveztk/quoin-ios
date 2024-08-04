@@ -134,6 +134,7 @@ struct LoginView: View {
                         .font(.body)
                         .fontWeight(.bold)
                         .padding(.horizontal)
+                        .foregroundColor(Color.black)
                     HStack(spacing: -10) {
                         Image(systemName: "envelope")
                             .foregroundColor(.gray)
@@ -144,7 +145,7 @@ struct LoginView: View {
                             .disableAutocorrection(true)
                             .font(.body)
                             .fontWeight(.bold)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("Quoin Main"))
                             .padding()
                     }
                     .frame(height: 50) // Increase the height of the text box field
@@ -217,7 +218,7 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.black)
+                            .background(Color("Quoin Main"))
                             .cornerRadius(10)
                     }
                     .padding(.horizontal)
