@@ -134,7 +134,6 @@ struct LoginView: View {
                         .font(.body)
                         .fontWeight(.bold)
                         .padding(.horizontal)
-                        .foregroundColor(Color.black)
                     HStack(spacing: -10) {
                         Image(systemName: "envelope")
                             .foregroundColor(.gray)
@@ -145,7 +144,7 @@ struct LoginView: View {
                             .disableAutocorrection(true)
                             .font(.body)
                             .fontWeight(.bold)
-                            .foregroundColor(Color("Quoin Main"))
+                            .foregroundColor(.black)
                             .padding()
                     }
                     .frame(height: 50) // Increase the height of the text box field
@@ -218,7 +217,7 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color("Quoin Main"))
+                            .background(Color.black)
                             .cornerRadius(10)
                     }
                     .padding(.horizontal)
@@ -278,7 +277,7 @@ struct LoginView: View {
                 Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
             .navigationDestination(isPresented: $isLoggedIn) {
-                Home()
+                HomeView()
             }
         }
 

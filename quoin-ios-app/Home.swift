@@ -82,13 +82,6 @@ struct HomeView: View {
                                 Spacer()
                                 
 //                                Profile Icon
-//                                NavigationLink(destination: UpcomingView()) {
-//
-//                                    Image(systemName: "line.horizontal.3")
-//                                        .font(.title)
-//                                        .foregroundColor(.black)
-//                                }
-//                                .padding(.trailing, 3)
                                 //
                                 Button(action: {
                                     isBellModalVisible.toggle() // Toggle bell modal visibility
@@ -214,10 +207,10 @@ struct HomeView: View {
                                     //                                .padding(.horizontal, 40)
                                     .padding(.top, 5)
                                     //                            }
-                                    //                            .background(Color(UIColor.white))
-                                    //                            .padding(.top, 20)
-                                    //                            .padding(.horizontal)
-                                    //                            .cornerRadius(25)
+//                                                                .background(Color(UIColor.white))
+//                                                                .padding(.top, 20)
+//                                                                .padding(.horizontal)
+//                                                                .cornerRadius(25)
                                     
                                     
                                     
@@ -242,19 +235,29 @@ struct HomeView: View {
                                                         .foregroundColor(.blue)
                                                         .padding(.top, 5)
                                                         .padding(.bottom, -20)
-                                                        .padding(.trailing, 20) // Added padding to the right
+                                                        .padding(.trailing, 20)
                                                 }
                                             }
-                                            
-                                            // Carousel of 4 cards start
-                                            
-                                            
-                                            // Carousel of 3 cards end
                                         }
-                                        //                                    .background(Color.gray.opacity(0.1))
-                                        //                                    .cornerRadius(8)
-                                        //                                    .padding(.horizontal)
-                                        .transition(.opacity)
+                                        // Carousel of 4 cards start
+                                        
+                                        TabView {
+                                            ForEach(tenancies, id: \.0.pk) { tenancy, address in
+                                                NavigationLink(destination:PropertyView(tenancyId: tenancy.pk) //PropertyView()
+                                                ) {
+                                                    CardView {
+                                                        VStack(alignment: .leading) {
+                                                        }
+                                                        .padding()
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                                        .frame(height: UIScreen.main.bounds.width * 0.4)
+                                        
+                                        // Carousel of 3 cards end
                                     }
                                     
                                     if selectedSection == "Live Maintenance" {
@@ -305,7 +308,7 @@ struct HomeView: View {
                                                     .fontWeight(.bold)
                                                     .padding(.top, 10)
                                                     .padding(.bottom, -20)
-                                                    .padding(.trailing, 20) // Added padding to the right
+                                                    .padding(.trailing, 20)
                                             }
                                         }
                                         .padding(.bottom, 30)
@@ -330,14 +333,13 @@ struct HomeView: View {
                                                                 date: "10")
                                                             
                                                         }
-                                                        .padding(5) // Reduced padding inside the card
-                                                        .background(Color.white) // Background color of the card
-                                                        .cornerRadius(20) // Rounded corners for the card
-                                                        .shadow(radius: 5) // Shadow for a card-like appearance
+                                                        .padding(5)
+                                                        .background(Color.white)
+                                                        .cornerRadius(20)
+                                                        .shadow(radius: 5)
                                                     }
-                                                    .padding(.horizontal, 15) // Reduced horizontal padding
-                                                    .padding(.vertical, 5) // Reduced vertical padding
-                                                    
+                                                    .padding(.horizontal, 15)
+                                                    .padding(.vertical, 5)
                                                 }
                                             }
                                         }
@@ -471,49 +473,52 @@ struct HomeView: View {
                         .foregroundStyle(.black)
                     }
                     
-                    
-                    //                VStack {
-                    //                    Spacer() // This spacer pushes the HStack down
-                    //                    HStack {
-                    //                        Spacer()
-                    //                        NavBarButton(iconName: "house.fill", buttonText: "Home")
-                    //                            .padding(.vertical) // Add padding at the top and bottom
-                    //                        Spacer()
-                    //                        NavigationLink(destination: NewsFeedView()) {
-                    //                            NavBarButton(iconName: "newspaper.fill", buttonText: "News Feed")
-                    //                                .padding(.vertical) // Add padding at the top and bottom
-                    //                        }
-                    //                        Spacer()
-                    //                        NavigationLink(destination: AnnouncementsView()) {
-                    //                            NavBarButton(iconName: "megaphone.fill", buttonText: "Announcements")
-                    //                                .padding(.vertical) // Add padding at the top and bottom
-                    //                        }
-                    //                        Spacer()
-                    //                        NavigationLink(destination: ProfileView()) {
-                    //                            NavBarButton(iconName: "person.crop.circle", buttonText: "Profile")
-                    //                                .padding(.vertical) // Add padding at the top and bottom
-                    //                        }
-                    //                        Spacer()
-                    //                    }
-                    //                    .padding(.horizontal) // Add equal padding on each side
-                    //                    .background(
-                    //                        LinearGradient(
-                    //                            gradient: Gradient(colors: [Color(hex: "#000000"), Color(hex: "#F5F5F")]),
-                    //                            //                                Color(hex: "#575757")]),
-                    //                            startPoint: .leading,
-                    //                            endPoint: .trailing
-                    //                        )
-                    //                    )
-                    //                    .cornerRadius(35) // Apply border radius
-                    //                    .foregroundColor(.white) // Set text and image color to white
-                    //                    .padding(.horizontal)
-                    //                    .padding(.bottom, -40) // Bring the HStack closer to the bottom
-                    //                }
-                    //                .padding(.bottom, 20) // Bring the entire VStack closer to the bottom
+//                    Navigation button green style start
+                                    VStack {
+                                        Spacer() // This spacer pushes the HStack down
+                                        HStack {
+                                            Spacer()
+                                            NavBarButton(iconName: "house.fill", buttonText: "Home")
+                                                .padding(.vertical) // Add padding at the top and bottom
+                                            Spacer()
+                                            NavigationLink(destination: NewsFeedView()) {
+                                                NavBarButton(iconName: "newspaper.fill", buttonText: "News Feed")
+                                                    .padding(.vertical) // Add padding at the top and bottom
+                                            }
+                                            Spacer()
+                                            NavigationLink(destination: AnnouncementsView()) {
+                                                NavBarButton(iconName: "megaphone.fill", buttonText: "Announcements")
+                                                    .padding(.vertical) // Add padding at the top and bottom
+                                            }
+                                            Spacer()
+                                            NavigationLink(destination: ProfileView()) {
+                                                NavBarButton(iconName: "person.crop.circle", buttonText: "Profile")
+                                                    .padding(.vertical) // Add padding at the top and bottom
+                                            }
+                                            Spacer()
+                                        }
+                                        .padding(.horizontal) // Add equal padding on each side
+                                        .background(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [Color(hex: "#000000"), Color(hex: "#F5F5F")]),
+                                                //                                Color(hex: "#575757")]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                        .cornerRadius(35) // Apply border radius
+                                        .foregroundColor(.white) // Set text and image color to white
+                                        .padding(.horizontal)
+                                        .padding(.bottom, -40) // Bring the HStack closer to the bottom
+                                    }
+                                    .padding(.bottom, 20) // Bring the entire VStack closer to the bottom
                     .sheet(isPresented: $isBellModalVisible) {
                         BellModalView()
                             .presentationDetents([.fraction(0.9)]) // Open modal to half screen
                     }
+                
+                //                    Navigation button green style end
+
                     
                     
                     // Side Menu
