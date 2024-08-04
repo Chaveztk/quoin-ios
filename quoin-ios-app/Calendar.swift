@@ -9,7 +9,7 @@ struct CalendarBookingView: View {
     @State private var selectedDate: Date? = nil
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 29))!: [
+        Calendar.current.date(from: DateComponents(year: 2024, month: 8, day: 2))!: [
             Event(title: "Doctor appointment, friends and family", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
             Event(title: "Doctor appointment, friends and family", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!),
             Event(title: "Doctor appointment, friends and family", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 3))!)
@@ -683,11 +683,11 @@ struct EventRowView: View {
 
 //struct WidgetCard: View {
 //    @Binding var bookings: [Date: [Event]]
-//    
+//
 //    private var currentDate: Date {
 //        Date()
 //    }
-//    
+//
 //    var body: some View {
 //        VStack(alignment: .leading, spacing: 0) { // Adjust spacing as per your layout
 //            HStack {
@@ -707,12 +707,12 @@ struct EventRowView: View {
 //                    Text("Today event")
 //                        .font(.caption)
 //                }
-//                
+//
 //            }
 //            .padding()
-//            
+//
 //            Spacer()
-//            
+//
 //            if let events = bookings[Calendar.current.startOfDay(for: currentDate)] {
 //                ScrollView(.vertical) {
 //                    VStack(spacing: 8) {
@@ -726,14 +726,14 @@ struct EventRowView: View {
 //                            .background(Color(hex: "#F5F5F7")) // Background color of the row
 //                            .padding(.horizontal, -25)
 //                            .cornerRadius(5)
-//                            
-//                            
+//
+//
 //                        }
 //                        .padding(.horizontal, 10)
 //                    }
 //                }
 //                .padding(.top, -5)
-//                
+//
 //            } else {
 //                Text("No events Today")
 //                    .font(.caption)
@@ -936,8 +936,8 @@ struct CalendarViews: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 7), spacing: 10) {
                 // Adjusting to show correct offset before the first day of the month
                 ForEach(0..<firstWeekday-1, id: \.self) { _ in
-                    Text("")
-                        .frame(maxWidth: .infinity)
+//                    Text("")
+//                        .frame(maxWidth: .infinity)
                 }
                 
                 ForEach(days, id: \.self) { day in
@@ -967,6 +967,3 @@ struct CalendarViews: View {
         return day == today && thisMonth == calendar.component(.month, from: currentDate) && thisYear == calendar.component(.year, from: currentDate)
     }
 }
-
-
-

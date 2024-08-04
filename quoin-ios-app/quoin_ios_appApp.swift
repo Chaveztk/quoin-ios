@@ -18,9 +18,7 @@ struct quoin_ios_appApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            LoginView()
-            //LoginView()
-            HomeView()
+            LoginView()
         }
     }
 }

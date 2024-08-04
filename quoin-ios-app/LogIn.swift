@@ -145,7 +145,7 @@ struct LogInView: View {
                 
                 
                 .navigationDestination(isPresented: $isLoggedIn) {
-                    HomeView(
+                    Home(
                     )
                 }
             }

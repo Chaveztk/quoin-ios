@@ -277,7 +277,7 @@ struct LoginView: View {
                 Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
             .navigationDestination(isPresented: $isLoggedIn) {
-                HomeView()
+                Home()
             }
         }
 

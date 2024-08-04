@@ -13,6 +13,9 @@ extension View {
     func commonNavigation(navigationTitle: String, showAlert: Binding<Bool>, alertMessage: String) -> some View {
         self
             .navigationTitle(navigationTitle)
+            .toolbarBackground(Color("Quoin Main"))
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
             .alert(isPresented: showAlert) {
                 Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
@@ -107,6 +110,14 @@ extension Color {
 struct Background: View {
     var body: some View {
         LinearGradient(gradient: Gradient(colors: [Color(hex: "#F5F5F7"), Color(hex: "#F5F5F7")]), startPoint: .leading, endPoint: .bottom) // Changed to light gray
+            .edgesIgnoringSafeArea(.all)
+    }
+}
+
+
+struct BackgroundTwo: View {
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [Color("Quoin Main"), Color("Quoin Secondary")]), startPoint: .leading, endPoint: .bottom) // Changed to light gray
             .edgesIgnoringSafeArea(.all)
     }
 }

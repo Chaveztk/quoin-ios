@@ -20,7 +20,7 @@ struct HomeView: View {
     @State private var selectedTab = 0 // State for selected tab
     
     @State private var bookings: [Date: [Event]] = [
-        Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 31))!: [
+        Calendar.current.date(from: DateComponents(year: 2024, month: 8, day: 4))!: [
             Event(title: "Doctor appointment", time: "10:30am - 11:30am", color: .red, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Dentis appointment", time: "12:00pm - 1:00pm", color: .green, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!),
             Event(title: "Apple appointment", time: "7:00pm - 9:00pm", color: .orange, date: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 3))!)
@@ -248,50 +248,6 @@ struct HomeView: View {
                                             
                                             // Carousel of 4 cards start
                                             
-                                            TabView {
-                                                ForEach(tenancies, id: \.0.pk) { tenancy, address in
-                                                    NavigationLink(destination:PropertyView(tenancyId: tenancy.pk) //PropertyView()
-                                                    ) {
-                                                        CardView {
-                                                            VStack(alignment: .leading) {
-                                                                HStack {
-                                                                    
-                                                                    
-                                                                    Image("TerracedHouse")
-                                                                        .resizable()
-                                                                        .aspectRatio(contentMode: .fill)
-                                                                        .clipShape(Circle())
-                                                                        .frame(width: 50, height: 50) // Set the frame size
-                                                                    //                                                                    .clipShape(RoundedRectangle(cornerRadius: 5)) // Add rounded corners
-                                                                        .padding(.bottom, -2)
-                                                                        .padding(.trailing, 10)
-                                                                    
-                                                                    
-                                                                    //                                                                Image(systemName: )
-                                                                    //                                                                    .resizable()
-                                                                    //                                                                    .frame(width: 40, height: 40)
-                                                                    //                                                                    .foregroundColor(.black)
-                                                                    //                                                                    .clipShape(Circle())
-                                                                    //                                                                    .padding(.trailing, 10)
-                                                                    Text(address)
-                                                                        .font(.subheadline)
-                                                                        .foregroundColor(.black)
-                                                                        .fontWeight(.bold)
-                                                                    Spacer()
-                                                                    Text(tenancy.rent_pm_swift)
-                                                                        .font(.subheadline)
-                                                                        .foregroundColor(.gray)
-                                                                }
-                                                                .padding(.bottom, 5)
-                                                            }
-                                                            .padding()
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                                            .frame(height: UIScreen.main.bounds.width * 0.4)
                                             
                                             // Carousel of 3 cards end
                                         }
@@ -576,31 +532,6 @@ struct HomeView: View {
                             }
                         })
                         .edgesIgnoringSafeArea(.all)
-                    }
-                }
-            }
-            .onAppear {
-                Task {
-                    do {
-                        var tenanciesList: [Tenancy]?
-                        if isAdmin {
-                            tenanciesList = try await fetchDataList(modelType: Tenancy.self, pivot: "tenancy", search: nil)
-                        } else {
-                            tenanciesList = try await fetchDataList(modelType: Tenancy.self, pivot: "tenancy", search: username)
-                        }
-                        if let tenanciesList = tenanciesList {
-                            for tenancy in tenanciesList {
-                                let property = try await fetchData(modelType: Estate.self, url: tenancy.property)
-                                let address = property.address
-                                let tenancyDetails = (tenancy, address)
-                                tenancies.append(tenancyDetails)
-                            }
-                        }
-                        isLoading = false
-                    } catch {
-                        isLoading = false
-                        showAlert = true
-                        alertMessage = "Error loading data. \(error)"
                     }
                 }
             }

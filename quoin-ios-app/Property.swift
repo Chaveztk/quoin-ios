@@ -552,7 +552,7 @@ struct PropertyView: View {
                                     do {
                                         tenancy = try await fetchData(modelType: Tenancy.self, url: tenancyId)
                                         if let tenancy = tenancy {
-                                            estate = try await fetchData(modelType: Estate.self, url: tenancy.property)
+                                            estate = try await fetchData(modelType: Estate.self, url: tenancy.estate)
                                             if let estate = estate, let pictures = estate.pictures, let pictureUrl = pictures.first {
                                                 mainPicture = try await fetchData(modelType: Picture.self, url: pictureUrl)
                                             }

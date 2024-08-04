@@ -38,10 +38,12 @@ func makePostRequest<T: Encodable>(url: URL, method: String, jsonData: T) async 
     return (data, response)
 }
 
-func buildUrl(pivot: String, search: String?) -> URL? {
+func buildUrl(pivot: String, search: String?, filter: String?) -> URL? {
     let search = search ?? ""
+    let filter = filter ?? ""
     guard let searchEncoded = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-    return URL(string: "http://me-quoin-management.us-east-1.elasticbeanstalk.com/api/\(pivot)/?search=\(searchEncoded)")
+    guard let filterEncoded = filter.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
+    return URL(string: "http://me-quoin-management.us-east-1.elasticbeanstalk.com/api/\(pivot)/?search=\(searchEncoded)&ordering=\(filterEncoded)")
 }
 
 func fetchData<T: CodableWithPK>(modelType: T.Type, url: URL) async throws -> T {
@@ -51,8 +53,8 @@ func fetchData<T: CodableWithPK>(modelType: T.Type, url: URL) async throws -> T 
     return try JSONDecoder().decode(T.self, from: data)
 }
 
-func fetchDataList<T: CodableWithPK>(modelType: T.Type, pivot: String, search: String?) async throws -> [T] {
-    guard let url = buildUrl(pivot: pivot, search: search) else { throw NetworkError.invalidResponse }
+func fetchDataList<T: CodableWithPK>(modelType: T.Type, pivot: String, search: String?, filter: String?) async throws -> [T] {
+    guard let url = buildUrl(pivot: pivot, search: search, filter: filter) else { throw NetworkError.invalidResponse }
     let (data, response) = try await makeGetRequest(url: url, method: "GET")
     guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else { throw NetworkError.invalidResponse }
     return try JSONDecoder().decode([T].self, from: data)

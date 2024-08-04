@@ -25,7 +25,8 @@ struct Tenant: CodableWithPK {
 struct Tenancy: CodableWithPK {
     let rental_id: URL
     var pk: URL { return rental_id }
-    let property: URL
+    let estate: URL
+    let address: String
     let tenant: [URL]
     let rent_pm: Float?
     var rent_pm_swift: String { if let rent_pm = rent_pm { return String("£ ") + String(rent_pm)} else {return String("N/A")}}
